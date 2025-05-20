@@ -300,16 +300,19 @@ Vector $\vec{CP} = P - C = (x, y) - (0, l) = (x, y - l)$
 So, reflected vector $\vec{CP'} = -\vec{CP} = (-x, l - y)$  
 So, the reflection point $P' = C + \vec{CP'} = (-x, 2l - y)$
 
-This strategy always works and here's the proof:
+<details>
+<summary>Proof</summary>
 
 - $C(0, l)$ is a lattice point.
-- Since $r \le l/2$, the first disk easily fits inside the board, so the first move is valid.
+- Since $r \le l/2$, the first disk easily fits inside the board, so your first move is valid.
 - After you make the first move, the board remains symmetric.
 - The center is now occupied, so your opponent cannot touch it.
 - Before your opponent makes any move, the board is symmetric. So, if any point $P(x, y)$ is within the hexagon and not overlapping with any disk, the same applies to its reflection $P'(-x, 2l - y)$.
 - So, if your opponent makes a valid move at $P$, your move at $P'$ will also be valid.
 - Each time you respond to your opponent's move by mirroring it, _the board becomes symmetric again._ So, the property holds and you will always have the guarantee that **whenever your opponent makes a valid move, you have a valid response to that**.
 - Eventually, your opponent will be forced to make an invalid move and you win!
+
+</details>
 
 <details>
 <summary>Code</summary>
