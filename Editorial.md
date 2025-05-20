@@ -1,7 +1,7 @@
 # Editorial for Intra-IUT Junior Programming Contest 2024
 
 <details>
-<summary>Problem A - Gotta Catch'Em All</summary>
+<summary>Problem A - Gotta Catch 'Em All</summary>
 
 Problem Setter: [Rafio](https://codeforces.com/profile/Rafio)
 
