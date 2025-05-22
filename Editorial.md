@@ -1,4 +1,4 @@
-# Editorial for Intra-IUT Junior Programming Contest 2024
+# Editorial for Intra-IUT Junior Programming Contest 2025
 
 <details>
 <summary>Problem A - Gotta Catch'Em All</summary>
