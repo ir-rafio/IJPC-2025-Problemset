@@ -1,13 +1,13 @@
 # Editorial for Intra-IUT Junior Programming Contest 2025
 
 <details>
-<summary>Problem A - Gotta Catch 'Em All</summary>
+<summary>Problem A - Arcane Accumulation</summary>
 
-Problem Setter: [Rafio](https://codeforces.com/profile/Rafio)
+Problem Setter: [Jannatul Fardus Rakhi](https://codeforces.com/profile/sectumsemprra)
 
 Difficulty: Medium
 
-Tags: Combinatorics, Number Theory
+Tags: Greedy
 
 <details>
 <summary>Hint</summary>
@@ -33,7 +33,141 @@ Solution
 </details>
 
 <details>
-<summary>Problem B - Inverted Query</summary>
+<summary>Problem B - Balloon</summary>
+
+Problem Setter: [Reaz Hassan Joarder](https://codeforces.com/profile/ssshanto)
+
+Difficulty: Giveaway
+
+<details>
+<summary>Hint</summary>
+
+Hint
+
+</details>
+
+<details>
+<summary>Solution</summary>
+
+Solution
+
+<details>
+<summary>Code</summary>
+
+```cpp
+// Code
+```
+
+</details>
+</details>
+</details>
+
+<details>
+<summary>Problem C - You Can't See Me</summary>
+
+Problem Setter: [Sabbir Ahmed](https://cse.iutoic-dhaka.edu/profile/sabbir/)
+
+Difficulty: Easy
+
+Tags: Math
+
+<details>
+<summary>Hint</summary>
+
+Hint
+
+</details>
+
+<details>
+<summary>Solution</summary>
+
+Solution
+
+<details>
+<summary>Code</summary>
+
+```cpp
+// Code
+```
+
+</details>
+</details>
+</details>
+
+<details>
+<summary>Problem D - Arise</summary>
+
+Problem Setter: [Akib Haider](https://codeforces.com/profile/_akibhaider_)
+
+Difficulty: Medium
+
+Tags: Brute Force, Implementation, Strings
+
+<details>
+<summary>Solution</summary>
+
+Solution
+
+<details>
+<summary>Code</summary>
+
+```cpp
+// Code
+```
+
+</details>
+</details>
+
+<details>
+<summary>Alternate Solution</summary>
+
+Solution
+
+<details>
+<summary>Code</summary>
+
+```cpp
+// Code
+```
+
+</details>
+</details>
+</details>
+
+<details>
+<summary>Problem E - Eid Salami</summary>
+
+Problem Setter: [Rafio](https://codeforces.com/profile/Rafio)
+
+Difficulty: Hard
+
+Tags: Greedy, Binary Search
+
+<details>
+<summary>Hint</summary>
+
+Hint
+
+</details>
+
+<details>
+<summary>Solution</summary>
+
+Solution
+
+<details>
+<summary>Code</summary>
+
+```cpp
+// Code
+```
+
+</details>
+</details>
+</details>
+
+<details>
+<summary>Problem F - Inverted Query</summary>
 
 Problem Setter: [Mahiul Kabir](https://codeforces.com/profile/the-NerdNinja)
 
@@ -61,8 +195,9 @@ We have some prefix of the array, and some suffix.
 
 Obviously, the brute force approach is too slow to pass the time limit.
 
-From the Hints, we deduce that we need to find the maximum and the minimum elements of prefix[A_1 to A_(l-1)], and suffix[A_(r+1), A_n]. This can be done with the classic trick: ***prefix arrays***.
-We precompute 4 arrays, 
+From the Hints, we deduce that we need to find the maximum and the minimum elements of prefix[A_1 to A_(l-1)], and suffix[A_(r+1), A_n]. This can be done with the classic trick: **_prefix arrays_**.
+We precompute 4 arrays,
+
 - prefix min array
 - prefix max array
 - suffix min array
@@ -139,179 +274,13 @@ int main(){
 </details>
 
 <details>
-<summary>Problem C - You Can't See Me</summary>
+<summary>Problem G - Trouble in the North</summary>
 
-Problem Setter: [Sabbir Ahmed](https://cse.iutoic-dhaka.edu/profile/sabbir/)
+Problem Setter: [Abdullah Abrar](https://codeforces.com/profile/lelbaba)
 
 Difficulty: Easy
 
 Tags: Math
-
-<details>
-<summary>Hint</summary>
-
-Hint
-
-</details>
-
-<details>
-<summary>Solution</summary>
-
-Solution
-
-<details>
-<summary>Code</summary>
-
-```cpp
-// Code
-```
-
-</details>
-</details>
-</details>
-
-<details>
-<summary>Problem D - Giveaway Problem</summary>
-
-Problem Setter: [Reaz Hassan Joarder](https://codeforces.com/profile/ssshanto)
-
-Difficulty: Giveaway
-
-<details>
-<summary>Hint</summary>
-
-Hint
-
-</details>
-
-<details>
-<summary>Solution</summary>
-
-Solution
-
-<details>
-<summary>Code</summary>
-
-```cpp
-// Code
-```
-
-</details>
-</details>
-</details>
-
-<details>
-<summary>Problem E - Eid Salami</summary>
-
-Problem Setter: [Rafio](https://codeforces.com/profile/Rafio)
-
-Difficulty: Hard
-
-Tags: Greedy, Binary Search
-
-<details>
-<summary>Hint</summary>
-
-Hint
-
-</details>
-
-<details>
-<summary>Solution</summary>
-
-Solution
-
-<details>
-<summary>Code</summary>
-
-```cpp
-// Code
-```
-
-</details>
-</details>
-</details>
-
-<details>
-<summary>Problem F - Arise</summary>
-
-Problem Setter: [Akib Haider](https://codeforces.com/profile/_akibhaider_)
-
-Difficulty: Medium
-
-Tags: Brute Force, Implementation, Strings
-
-<details>
-<summary>Solution</summary>
-
-Solution
-
-<details>
-<summary>Code</summary>
-
-```cpp
-// Code
-```
-
-</details>
-</details>
-
-<details>
-<summary>Alternate Solution</summary>
-
-Solution
-
-<details>
-<summary>Code</summary>
-
-```cpp
-// Code
-```
-
-</details>
-</details>
-</details>
-
-<details>
-<summary>Problem G1 - Maximum Expectations (Easy Version)</summary>
-
-Problem Setter: [Rafio](https://codeforces.com/profile/Rafio)
-
-Difficulty: Easy-Medium
-
-Tags: Probability, DP, Math
-
-<details>
-<summary>Hint</summary>
-
-Hint
-
-</details>
-
-<details>
-<summary>Solution</summary>
-
-Solution
-
-<details>
-<summary>Code</summary>
-
-```cpp
-// Code
-```
-
-</details>
-</details>
-</details>
-
-<details>
-<summary>Problem G2 - Maximum Expectations (Hard Version)</summary>
-
-Problem Setter: [Rafio](https://codeforces.com/profile/Rafio)
-
-Difficulty: Medium
-
-Tags: Probability, Math
 
 <details>
 <summary>Hint</summary>
@@ -348,7 +317,7 @@ Tags: Geometry, Interactive, Game Theory
 <details>
 <summary>Hint 1</summary>
 
-Try to come up with a simple strategy where you'll have a response for _anything_ your opponent does.
+You can't control what your opponent will do. So try to come up with a _simple_ strategy where you'll have a response for _anything_ your opponent does.
 
 </details>
 
@@ -387,38 +356,6 @@ So, the reflection point $P' = C + \vec{CP'} = (-x, 2l - y)$
 - Eventually, your opponent will be forced to make an invalid move and you win!
 
 </details>
-
-<details>
-<summary>Code</summary>
-
-```cpp
-// Code
-```
-
-</details>
-</details>
-</details>
-
-<details>
-<summary>Problem I - The Wizards' Gambit</summary>
-
-Problem Setter: [Jannatul Fardus Rakhi](https://codeforces.com/profile/sectumsemprra)
-
-Difficulty: Medium
-
-Tags: Greedy
-
-<details>
-<summary>Hint</summary>
-
-Hint
-
-</details>
-
-<details>
-<summary>Solution</summary>
-
-Solution
 
 <details>
 <summary>Code</summary>
