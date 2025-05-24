@@ -5,23 +5,49 @@
 
 Problem Setter: [Jannatul Fardus Rakhi](https://codeforces.com/profile/sectumsemprra)
 
-Difficulty: Medium
-
+Difficulty: Medium  
 Tags: Greedy
 
 <details>
 <summary>Hint</summary>
 
-Hint
+What would be the optimal strategy for $k = 1$?
 
 </details>
 
 <details>
 <summary>Solution</summary>
 
-Solution
+Let’s begin by understanding what happens when the **Cloning Spell** is used **once**.
 
-<details>
+When the _i-th_ wizard casts the spell:
+
+- All **original** wizards from position `1` to `i-1` are cloned.
+- These clones are inserted immediately before wizard `i`.
+- The rest shift right accordingly.
+- The cloned segment adds `sum(a[0] to a[i-2])` to the total magical potential.
+
+Let’s call this value `prefix[i - 1]` (the sum of the first `i - 1` elements).  
+So the **gain** from this spell is `prefix[i - 1]`.
+
+Thus, if you’re allowed to cast the spell **once**, the optimal wizard is the one that gives the **maximum** `prefix[i - 1]`.
+
+Now observe:
+
+- Cloned wizards can’t be cloned again.
+- So after the first application, further spells don’t introduce new content — they just clone the same **original** segment again.
+- The cloned block remains identical every time.
+
+This means:
+
+- The **best wizard to clone once** is also the best wizard to clone multiple times.
+- Each additional spell adds the same fixed value `prefix[i - 1]`.
+
+Therefore, to maximize the total potential:
+
+1. Choose the `i` that maximizes `prefix[i - 1]`.
+2. Add `k × prefix[i - 1]` to the original sum of the array.
+
 <summary>Code</summary>
 
 ```cpp
@@ -99,7 +125,8 @@ You can implement the decryption algorithm. But since the answer is fixed, it is
 #include <bits/stdc++.h>
 using namespace std;
 
-int main() {
+int main()
+{
     cout << "GIVE ME A BALLOON";
 }
 ```
@@ -118,16 +145,21 @@ Difficulty: Easy
 Tags: Math
 
 <details>
-<summary>Hint</summary>
-
-Hint
-
-</details>
-
-<details>
 <summary>Solution</summary>
 
-Solution
+To determine the receptive field size, consider the kernel as a square grid of side length $k$. When a kernel slides over an image, the pixel at the top-right of the kernel is $(k - 1)$ pixels to the right of the pixel at the top-left. So the **width** (or side length) of the receptive field increases by $(k - 1)$ at each layer.
+
+If the network has $n$ layers with kernel sizes $k_1, k_2, \dots, k_n$, the total span from the top-left to the top-right corner of the receptive field is:
+
+$$
+\sum_{i=1}^{n}(k_i - 1)
+$$
+
+Since the field is square and includes the initial pixel, we must add $1$ to get the final side length:
+
+$$
+\text{Receptive Field Length} = \sum_{i=1}^{n}(k_i - 1) + 1
+$$
 
 <details>
 <summary>Code</summary>
@@ -197,7 +229,19 @@ Tags: Brute Force, Implementation, Strings
 <details>
 <summary>Solution</summary>
 
-Solution
+This problem can be solved using a brute-force approach.
+
+The main task is to check whether a given string (a soldier’s name) appears in a straight line in a 2D grid. Since the grid size is small (the total number of characters is at most 1000 across all test cases), it is efficient enough to simply check **every possible starting position** in the grid and try to match the string in **each of the 8 directions** (horizontal, vertical, and both diagonals).
+
+For each name:
+
+- Start at every position in the grid.
+- For each direction from the 8 possible directions, try to match each character in the string.
+- If the full string matches without going out of bounds, count it.
+
+While the algorithm is simple, the code can become very large unless written in a clean way. The implementation can be made much cleaner and more manageable by using **functions**.
+
+In programming, repeating the same block of code in multiple places is considered bad practice. When a piece of logic is **reusable**, it is often a good idea to put it in a function. This improves readability, reduces the chance of errors, and makes debugging and testing easier.
 
 <details>
 <summary>Code</summary>
@@ -309,7 +353,16 @@ int main()
 <details>
 <summary>Alternate Solution</summary>
 
-Solution
+Instead of manually scanning the grid in 8 directions for every string, you can flatten the grid into a single _text_ string that contains all the lines — rows, columns, diagonals — separated by delimiters (e.g., commas, underscores, or dollar signs) that are guaranteed not to occur in the grid.
+
+Steps:
+
+- Build one string that contains:
+  - All rows (left-to-right)
+  - All columns (top-to-bottom)
+  - All diagonals (top-left to bottom-right and top-right to bottom-left)
+- Reverse the entire string to handle all 8 directions.
+- For each soldier name, check whether it appears as a substring in the flattened text.
 
 <details>
 <summary>Code</summary>
@@ -473,16 +526,178 @@ Difficulty: Hard
 Tags: Greedy, Binary Search
 
 <details>
-<summary>Hint</summary>
+<summary>Hint 1</summary>
 
-Hint
+First, focus on finding an optimal visiting order. Once you have that, calculating the minimum loan is easy.
+
+</details>
+
+<details>
+<summary>Hint 2</summary>
+
+Check out the sample test cases. For every cases, find the order of visiting houses and try to understand what is going on.
+
+</details>
+
+<details>
+<summary>Hint 3</summary>
+
+When a system has too many moving parts, you should first try to isolate their effects.  
+For this problem, analyze special cases like:
+
+- Zunaid has to give the same amount in every house.
+- Zunaid will receive the same amount in every house.
+- The delta (receive - give) is the same for all houses.
+
+</details>
+
+<details>
+<summary>Hint 4</summary>
+
+It is always optimal to visit _delta-positive_ houses before _delta-negative_ houses.
+
+</details>
+
+<details>
+<summary>Hint 5</summary>
+
+What to do if all the houses are _delta-positive_ or all the houses are _delta-negative_?
 
 </details>
 
 <details>
 <summary>Solution</summary>
 
-Solution
+At first, let's define some terms formally:
+
+- For the $i$-th house, $\delta_i = r_i - g_i$
+- A house is _delta-positive_ if $\delta_i > 0$
+- A house is _delta-negative_ if $\delta_i < 0$
+
+---
+
+The first key insight is that there is _no reason whatsoever_ to visit a delta-negative house before a delta-positive one. Every house must be visited eventually. So, if Zunaid visits a delta-negative house early, he reduces his balance. This is never good.  
+Visiting a delta-positive house afterward will still require him to give $g_i$ before receiving anything, which means the earlier balance reduction may force him to borrow more. The opposite order — visiting delta-positive houses first — helps increase the balance before visiting any other house.
+
+So, all delta-positive houses should be visited before any delta-negative house.
+
+---
+
+Now, among the delta-positive houses, the goal is to make sure Zunaid can visit them with the smallest possible initial loan. Even though all these houses are profitable in the long run, Zunaid still has to give $g_i$ before he gets $r_i$. Therefore, among these, it makes sense to visit the houses that require the _least_ upfront money first. That way, Zunaid starts with visits that are cheap but profitable, which gradually builds up his balance. Then, when he reaches a house where he has to give a large $g_i$, his previous profit may already be enough to cover it, saving him from taking a large loan.
+
+Hence, the delta-positive houses should be visited in _ascending_ order of $g_i$.
+
+---
+
+The ordering among delta-negative houses is less obvious. But it turns out that the way you order them can make a significant difference in how deep the balance goes below zero — and therefore how much Zunaid has to borrow.
+
+Here are some observations:
+
+- All delta-negative houses _must_ be visited eventually. None of them can be avoided and each will reduce the balance.
+- If the receiving amount is the same for all delta-negative houses, the order doesn't matter.
+- The money received from the _last_ house doesn't help at all.
+- Similarly, the money received from the _second last_ house can only help in the last house.
+- So, if there is a house from where Zunaid can receive a large amount of money, Zunaid should visit it early so that he can use that money. Even if Zunaid has to give a large amount to that house first, delaying it doesn't help at all. In fact, visiting other delta-negative houses will reduce his balance and make the situation worse.
+
+Therefore, among delta-negative houses, it's best to visit first the ones where Zunaid receives more money. This gives him some balance to work with before facing the next loss.
+
+So, delta-negative houses should be visited in _descending_ order of $r_i$.
+
+---
+
+Once the visiting order is fixed using the above rules, simulate the journey:
+
+- Start with a balance of zero.
+- At each house:
+  - Subtract $g_i$ from the balance.
+  - If the balance becomes negative, track how far below zero it goes — this represents how much loan Zunaid would have needed at the start.
+  - Then add $r_i$ to the balance.
+- The minimum required loan is the _maximum magnitude of the negative balance_ at any point during the simulation.
+
+This method gives you the answer directly. Alternatively, you could design a function that checks whether a loan of $x$ is sufficient and binary search for the smallest such $x$.
+
+---
+
+**Summary of Strategy**:
+
+1. Split the houses into delta-positive and delta-negative. Houses with $\delta_i = 0$ can be considered either delta-positive or delta-negative, but not both.
+2. Sort:
+   - Delta-positive houses by increasing $g_i$.
+   - Delta-negative houses by decreasing $r_i$.
+3. Visit all delta-positive houses first, then all delta-negative houses.
+4. Simulate the journey and find the minimum required loan.
+
+<details>
+<summary>Proof</summary>
+
+The correctness of the strategy can be proven in three steps.
+
+---
+
+Before proving any of the steps, let's establish the premise of the argument.
+
+Suppose there are two houses:
+
+- $(g_1, r_1)$ with $\delta_1 = r_1 - g_1$
+- $(g_2, r_2)$ with $\delta_2 = r_2 - g_2$
+
+Two visiting orders can be considered.
+
+_Option 1:_ Visit $(g_1, r_1)$ before $(g_2, r_2)$  
+Balance timeline: $[x, x - g_1, x + \delta_1, x + \delta_1 - g_2, x + \delta_1 + \delta_2]$  
+Minimum balance: $\min(x - g_1, x + \delta_1 - g_2)$
+
+_Option 2:_ Visit $(g_2, r_2)$ before $(g_1, r_1)$  
+Balance timeline: $[x, x - g_2, x + \delta_2, x + \delta_2 - g_1, x + \delta_1 + \delta_2]$  
+Minimum balance: $\min(x - g_2, x + \delta_2 - g_1)$
+
+**The optimal choice is the one that maximizes the minimum balance.**
+
+---
+
+_Step 1: Delta-positive houses must be visited before delta-negative houses._
+
+Assume $\delta_1 \ge 0$ and $\delta_2 < 0$.
+
+Now,
+
+- $x + \delta_2 - g_1 < x - g_1$ $[\because \delta_2 < 0]$
+- $x - g_2 < x + \delta_1 - g_2$ $[\because \delta_1 > 0]$
+
+Clearly, both terms in Option 1 have a smaller counterparts in Option 2. Hence, the minimum balance in Option 2 is strictly smaller, meaning a higher loan would be required. Therefore, Option 1 is better.
+
+---
+
+_Step 2: Among delta-positive houses, those with smaller $g$ must be visited earlier._
+
+Assume both $\delta_1, \delta_2 \ge 0$ and $g_1 > g_2$.
+
+Now,
+
+- $x - g_1 < x - g_2$ $[\because g_1 > g_2]$,
+- $x - g_1 < x + d_2 - g_1$ $[\because \delta_2 > 0]$
+
+Both terms in Option 2 have a smaller counterpart in Option 1. So, the minimum balance in Option 1 is smaller. Therefore, Option 2 is better.
+
+---
+
+_Step 3: Among delta-negative houses, those with larger $r$ must be visited earlier._
+
+Assume both $\delta_1, \delta_2 < 0$ and $r_1 > r_2$.
+
+In Option 1, the minimum balance is $x + \delta_1 - g_2$ ; because $x - g1 = x + \delta_1 - r_1$, $r_1 < r_2 < g_ 2$ and $x + \delta_1 - g_2 < x + \delta_1 - r_1$.  
+In Option 2, the minimum balance is $\min(x - g_2, x + \delta_2 - g_1)$.
+
+Now,
+
+- $x + \delta_2 - g_1 = x + \delta_1 + \delta_2 - r_1$
+- $x + \delta_1 - g_2 = x + \delta_1 + \delta_2 - r_2$
+- $x + \delta_2 - g_1 < x + \delta_1 - g_2$ $[\because r_1 > r_2]$
+- $x + \delta_2 - g_1 < x - g_1$ $[\because \delta_2 < 0]$
+
+Both terms in Option 1 have a smaller counterpart in Option 2. So, the minimum balance in Option 2 is smaller. Therefore, Option 1 is better.
+
+</details>
 
 <details>
 <summary>Code</summary>
@@ -577,18 +792,44 @@ Difficulty: Easy-Medium
 Tags: Range Query
 
 <details>
-<summary>**Hint 0** : How can you find the maximum absolute difference of 2 elements of any set?</summary>
+<summary>Hint 1</summary>
+
+How can you find the maximum absolute difference of two elements in a set?
+
+<details>
+<summary>Answer</summary>
 
 The maximum difference can be found by taking the maximum and the minimum elements from the set.
 Why? because if the elements were x, y; where x < y, taking a smaller element x' will always improve the result.
 
 </details>
+</details>
 
 <details>
-<summary>**Hint 1** : What are we left with when we remove range [l, r] form the array?</summary>
+<summary>Hint 2</summary>
+
+What are we left with when we remove range [l, r] form the array?
+
+<details>
+<summary>Answer</summary>
 
 We have some prefix of the array, and some suffix.
 
+</details>
+</details>
+
+<details>
+<summary>Hint 3</summary>
+
+How can you find the maximum absolute difference of two elements in the union of two sets?
+
+<details>
+<summary>Answer</summary>
+
+The maximum difference can be found by taking the maximum and the minimum elements from the set.
+Why? because if the elements were x, y; where x < y, taking a smaller element x' will always improve the result.
+
+</details>
 </details>
 
 <details>
