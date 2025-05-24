@@ -2,4 +2,4 @@
 
 Problemset for Intra-IUT Junior Programming Contest 2025.
 
-Contest Link: Link
+Contest Link: https://codeforces.com/gym/612054
