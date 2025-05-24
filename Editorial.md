@@ -77,10 +77,7 @@ and combine the results accordingly.
 #include <bits/stdc++.h>
 using namespace std;
 
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-
+void solve() {
     int n, q;
     cin >> n >> q;
     vector<int> A(n+2);
@@ -123,13 +120,16 @@ int main() {
         }
 
         if (outside_count < 2) {
-            cout << 0 << "\n";
+            cout << -1 << "\n";
         } else {
             cout << (outside_max - outside_min) << "\n";
         }
     }
+}
 
-    return 0;
+int main(){
+  int tc; cin >> tc;
+  while(tc--) solve();
 }
 
 ```
