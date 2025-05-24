@@ -42,22 +42,96 @@ Difficulty: Easy-Medium
 Tags: Range Query
 
 <details>
-<summary>Hint</summary>
+<summary>**Hint 0** : How can you find the maximum absolute difference of 2 elements of any set?</summary>
 
-Hint
+The maximum difference can be found by taking the maximum and the minimum elements from the set.
+Why? because if the elements were x, y; where x < y, taking a smaller element x' will always improve the result.
+
+</details>
+
+<details>
+<summary>**Hint 1** : What are we left with when we remove range [l, r] form the array?</summary>
+
+We have some prefix of the array, and some suffix.
 
 </details>
 
 <details>
 <summary>Solution</summary>
 
-Solution
+Obviously, the brute force approach is too slow to pass the time limit.
+
+From the Hints, we deduce that we need to find the maximum and the minimum elements of prefix[A_1 to A_(l-1)], and suffix[A_(r+1), A_n]. This can be done with the classic trick: ***prefix arrays***.
+We precompute 4 arrays, 
+- prefix min array
+- prefix max array
+- suffix min array
+- suffix max array
+
+and combine the results accordingly.
 
 <details>
 <summary>Code</summary>
 
 ```cpp
-// Code
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n, q;
+    cin >> n >> q;
+    vector<int> A(n+2);
+    for (int i = 1; i <= n; i++)
+        cin >> A[i];
+
+    const int INF = 1e9 + 5;
+    vector<int> pref_min(n+2, INF), pref_max(n+2, -INF);
+    vector<int> suff_min(n+2, INF), suff_max(n+2, -INF);
+
+    // Build prefix
+    for (int i = 1; i <= n; i++) {
+        pref_min[i] = min(pref_min[i-1], A[i]);
+        pref_max[i] = max(pref_max[i-1], A[i]);
+    }
+    // Build suffix
+    for (int i = n; i >= 1; i--) {
+        suff_min[i] = min(suff_min[i+1], A[i]);
+        suff_max[i] = max(suff_max[i+1], A[i]);
+    }
+
+    while (q--) {
+        int l, r;
+        cin >> l >> r;
+
+        int outside_min = INF, outside_max = -INF;
+        int outside_count = 0;
+
+        // prefix part [1..l-1]
+        if (l > 1) {
+            outside_min = min(outside_min, pref_min[l-1]);
+            outside_max = max(outside_max, pref_max[l-1]);
+            outside_count += (l-1);
+        }
+        // suffix part [r+1..n]
+        if (r < n) {
+            outside_min = min(outside_min, suff_min[r+1]);
+            outside_max = max(outside_max, suff_max[r+1]);
+            outside_count += (n - r);
+        }
+
+        if (outside_count < 2) {
+            cout << 0 << "\n";
+        } else {
+            cout << (outside_max - outside_min) << "\n";
+        }
+    }
+
+    return 0;
+}
+
 ```
 
 </details>
