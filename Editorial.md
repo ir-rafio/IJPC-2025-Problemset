@@ -227,6 +227,13 @@ Difficulty: Medium
 Tags: Brute Force, Implementation, Strings
 
 <details>
+<summary>Hint</summary>
+
+Read the input constraints carefully.
+
+</details>
+
+<details>
 <summary>Solution</summary>
 
 This problem can be solved using a brute-force approach.
@@ -234,7 +241,6 @@ This problem can be solved using a brute-force approach.
 The main task is to check whether a given string (a soldier’s name) appears in a straight line in a 2D grid. Since the grid size is small (the total number of characters is at most 1000 across all test cases), it is efficient enough to simply check **every possible starting position** in the grid and try to match the string in **each of the 8 directions** (horizontal, vertical, and both diagonals).
 
 For each name:
-
 - Start at every position in the grid.
 - For each direction from the 8 possible directions, try to match each character in the string.
 - If the full string matches without going out of bounds, count it.
@@ -990,7 +996,7 @@ signed main()
 
 Problem Setter: [Rafio](https://codeforces.com/profile/Rafio)
 
-Difficulty: Medium-Hard
+Difficulty: Medium
 
 Tags: Geometry, Interactive, Game Theory
 
