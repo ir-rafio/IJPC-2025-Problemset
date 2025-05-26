@@ -110,14 +110,14 @@ Difficulty: Giveaway
 <summary>Hint</summary>
 
 This problem has no input.\
-*This is a white lie.*
+*This is a trivial white lie.*
 
 </details>
 
 <details>
 <summary>Solution</summary>
 
-You can implement the decryption algorithm. But since the answer is fixed, it is easier to decrypt by yourself and then simply print the decrypted string.
+You can implement the decryption algorithm. But since the answer is fixed, it is easier to decrypt it by yourself using a pen and paper. Then, simply print the decrypted string.
 
 <details>
 <summary>Code</summary>
@@ -129,6 +129,64 @@ using namespace std;
 int main()
 {
     cout << "GIVE ME A BALLOON";
+}
+```
+
+</details>
+</details>
+<details>
+<summary>Alternate Solution</summary>
+
+Let's go through this _tough_ problem step-by-step. The encrypted string that you are given is `NILE LE A BAMVOOG`. Keeping the spaces and vowels in their original positions, and masking out the consonants yields a skeleton of the form `⬚I⬚E ⬚E A ⬚A⬚⬚OO⬚`. Here, the original sequence of the filtered consonants is `[N, L, L, B, M, V, G]`, which upon being inverted, as per the encryption scheme, becomes `[G, V, M, B, L, L, N]`. Now, fill in the blank boxes of the skeleton string with the consonants in the order that they appear in the inverted sequence, and—voilà!—you obtain the answer `GIVE ME A BALLOON`.
+
+<details>
+<summary>Code</summary>
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+#define Godspeed                ios_base::sync_with_stdio(0);cin.tie(NULL)
+#define urs(r...)               typename decay<decltype(r)>::type
+#define REP(i,b)                for(urs(b) i=0;i<b;i++)
+#define SPRESENT(c,x)           ((c).find(x) != string::npos)
+#define Bye                     return 0
+
+int main()
+{
+    Godspeed;
+    int Tests=1;
+//    cin>>Tests;
+    while(Tests--)
+    {
+        string s="NILE LE A BAMVOOG",sC="",res="";
+        string vowels="AEIOU";
+        REP(i,s.length())
+        {
+            if(!SPRESENT(vowels,s[i]) && s[i]!=' ')
+            {
+               sC+=s[i];
+            }
+        }
+        REP(i,s.length())
+        {
+            if(s[i]==' ')
+            {
+                res+=' ';
+            }
+            else if(SPRESENT(vowels,s[i]))
+            {
+                res+=s[i];
+            }
+            else
+            {
+                res+=sC.back();
+                sC.pop_back();
+            }
+        }
+        cout<<res;
+    }
+    Bye;
 }
 ```
 
