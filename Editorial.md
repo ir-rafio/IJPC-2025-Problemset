@@ -109,7 +109,8 @@ Difficulty: Giveaway
 <details>
 <summary>Hint</summary>
 
-This problem has no input.
+This problem has no input.\
+*This is a white lie.*
 
 </details>
 
