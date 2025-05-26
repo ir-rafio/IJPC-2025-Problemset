@@ -202,7 +202,23 @@ Problem Setter: [Sabbir Ahmed](https://cse.iutoic-dhaka.edu/profile/sabbir/)
 Difficulty: Easy
 
 Tags: Math
+<details>
+<summary>Hint 1</summary>
 
+What happens with a single convolution layer? If you apply a kernel of size $k$ to an image, how many input pixels does a single output pixel depend on?
+
+</details>
+<details>
+<summary>Hint 2</summary>
+How does the receptive field grow with each layer?
+If you stack two convolution layers, each with kernel size $k_1$ and $k_2$, how does the receptive field of the output pixel relate to the previous layer?
+
+</details>
+<details>
+<summary>Hint 3</summary>
+Can you find a pattern or a recurrence relationship?
+
+</details>
 <details>
 <summary>Solution</summary>
 
@@ -270,6 +286,27 @@ signed main()
 
     return 0;
 }
+```
+
+</details>
+</details>
+<details>
+<summary>Alternate Solution</summary>
+Our objective is to determine the size of the receptive field at the input layer, (let's denote this as $r_0$). How should we approach this? If we carefully examine the illustration given in the problem statement, we can observe a hierarchical or *"pyramidal"* relationship between the receptive field sizes of successive layers. Specifically, each layer’s receptive field is built upon the receptive field of the previous layer, expanding outward as we move closer to the input. This pattern can be leveraged to express the receptive field at any layer in terms of the layers above it, ultimately leading us to a general formula for $r_0$.\
+We already know that the receptive field at the final layer, $r_n$, is always $1$, since each output feature depends only on itself. The key, then, is to find a general way to express $r_{i-1}$ in terms of $r_i$ for each layer.\
+To make the problem even more approachable, let's visualize our neural network as a sequence of 1-dimensional convolutional layers. This simplification is valid because convolutional kernels are usually symmetric across their dimensions. Even in cases with asymmetric kernels, the same reasoning can be applied independently to each dimension. With that in mind, let’s consider a straightforward 1D convolutional neural network:
+![1dConv](./images/1D_conv_example.png)
+
+
+
+<details>
+<summary>Code</summary>
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+
 ```
 
 </details>
