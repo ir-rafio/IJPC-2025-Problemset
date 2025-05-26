@@ -1045,15 +1045,34 @@ Tags: Math
 <details>
 <summary>Hint</summary>
 
-Hint
+Can you construct 4 simultaneous equations with which you can solve the 4 unknowns? A smart adoption of substitution and elimination should help us solve these equations.
 
 </details>
 
 <details>
 <summary>Solution</summary>
 
-Solution
-
+Let's denote the actual influence values of Shabab, Hamim, Rafi, and Abdullah with $w$, $x$, $y$, and $z$ respectively. Therefore, the given inputs can be written as,
+$$
+a = \frac{x+y+z}{3} \Rightarrow 3a=x+y+z\\
+b = \frac{w+y+z}{3} \Rightarrow 3b=w+y+z\\
+c = \frac{w+x+z}{3} \Rightarrow 3c=w+x+z\\
+d = \frac{w+x+y}{3} \Rightarrow 3d=w+x+y
+$$
+Summing these equations yield the following relationship:
+$$
+3a+3b+3c+3d=3w+3x+3y+3z\\
+\Rightarrow 3\cdot(a+b+c+d)=3\cdot(w+x+y+z)\\
+\Rightarrow a+b+c+d=w+x+y+z
+$$
+Now, let's denote the aggregate influence of all the 4 lords using $s=w+x+y+z$, which also means $s=a+b+c+d$. The aforementioned set of 4 equations can then be rewritten as,
+$$
+3a = s-w \Rightarrow w = s - 3a\\
+3b = s-x \Rightarrow x = s - 3b\\
+3c = s-y \Rightarrow y = s - 3c\\
+3d = s-z \Rightarrow z = s - 3d
+$$
+Consequently, we end up inferring the clouts $w$, $x$, $y$, and $z$ of all 4 lords Shabab, Hamim, Rafi, and Abdullah respectively.
 <details>
 <summary>Code</summary>
 
