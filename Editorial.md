@@ -5,8 +5,9 @@
 
 Problem Setter: [Jannatul Fardus Rakhi](https://codeforces.com/profile/sectumsemprra)
 
-Difficulty: Medium  
-Tags: Greedy
+Difficulty: Medium
+
+Tag(s): Greedy
 
 <details>
 <summary>Hint</summary>
@@ -136,7 +137,7 @@ int main()
 <details>
 <summary>Alternate Solution</summary>
 
-Let's go through this _tough_ problem step-by-step. The encrypted string that you are given is `NILE LE A BAMVOOG`. Keeping the spaces and vowels in their original positions, and masking out the consonants yields a skeleton of the form `⬚I⬚E ⬚E A ⬚A⬚⬚OO⬚`. Here, the original sequence of the filtered consonants is `[N, L, L, B, M, V, G]`, which upon being inverted, as per the encryption scheme, becomes `[G, V, M, B, L, L, N]`. Now, fill in the blank boxes of the skeleton string with the consonants in the order that they appear in the inverted sequence, and—voilà!—you obtain the answer `GIVE ME A BALLOON`.
+Let's go through this _tough_ problem step-by-step. The encrypted string that you are given is `"NILE LE A BAMVOOG"`. Keeping the spaces and vowels in their original positions, and masking out the consonants yields a skeleton of the form `⬚I⬚E ⬚E A ⬚A⬚⬚OO⬚`. Here, the original sequence of the filtered consonants is `[N, L, L, B, M, V, G]`, which upon being inverted, as per the encryption scheme, becomes `[G, V, M, B, L, L, N]`. Now, fill in the blank boxes of the skeleton string with the consonants in the order that they appear in the inverted sequence, and—voilà!—you obtain the answer `"GIVE ME A BALLOON"`.
 
 <details>
 <summary>Code</summary>
@@ -145,47 +146,61 @@ Let's go through this _tough_ problem step-by-step. The encrypted string that yo
 #include <bits/stdc++.h>
 using namespace std;
 
-#define Godspeed                ios_base::sync_with_stdio(0);cin.tie(NULL)
-#define urs(r...)               typename decay<decltype(r)>::type
-#define REP(i,b)                for(urs(b) i=0;i<b;i++)
-#define SPRESENT(c,x)           ((c).find(x) != string::npos)
-#define Bye                     return 0
+#define fastio ios_base::sync_with_stdio(0); cin.tie(0)
+using LL = long long;
 
-int main()
+bool isVowel(char ch)
 {
-    Godspeed;
-    int Tests=1;
-//    cin>>Tests;
-    while(Tests--)
+    return ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U';
+}
+
+void pre()
+{
+    fastio;
+}
+
+void solve(int tc)
+{
+    string s = "NILE LE A BAMVOOG";
+    string consonants, result;
+    int i, n = s.size();
+    char ch;
+
+    for(i = 0; i < n; i++)
     {
-        string s="NILE LE A BAMVOOG",sC="",res="";
-        string vowels="AEIOU";
-        REP(i,s.length())
-        {
-            if(!SPRESENT(vowels,s[i]) && s[i]!=' ')
-            {
-               sC+=s[i];
-            }
-        }
-        REP(i,s.length())
-        {
-            if(s[i]==' ')
-            {
-                res+=' ';
-            }
-            else if(SPRESENT(vowels,s[i]))
-            {
-                res+=s[i];
-            }
-            else
-            {
-                res+=sC.back();
-                sC.pop_back();
-            }
-        }
-        cout<<res;
+        ch = s[i];
+        if(!isVowel(ch) && ch != ' ') consonants += ch;
     }
-    Bye;
+
+    for(i = 0; i < n; i++)
+    {
+        ch = s[i];
+        if(ch == ' ') result += ' ';
+        else if(isVowel(ch)) result += ch;
+        else
+        {
+            result += consonants.back();
+            consonants.pop_back();
+        }
+    }
+
+    cout << result;
+}
+
+signed main()
+{
+    pre();
+
+    int tc, tt = 1;
+    //cin >> tt;
+
+    for(tc = 1; tc <= tt; tc++)
+    {
+        solve(tc);
+        cout << '\n';
+    }
+
+    return 0;
 }
 ```
 
@@ -200,41 +215,40 @@ Problem Setter: [Sabbir Ahmed](https://cse.iutoic-dhaka.edu/profile/sabbir/)
 
 Difficulty: Easy
 
-Tags: Math
+Tag(s): Math
 
 <details>
 <summary>Hint 1</summary>
 
-What happens with a single convolution layer? If you apply a kernel of size $k$ to an image, how many input pixels does a single output pixel depend on?
+What happens with a single convolution layer?  
+If you apply a kernel of size $k$ to an image, how many input pixels does a single output pixel depend on?
 
 </details>
+
 <details>
 <summary>Hint 2</summary>
-How does the receptive field grow with each layer?
+
+How does the receptive field grow with each layer?  
 If you stack two convolution layers, each with kernel size $k_1$ and $k_2$, how does the receptive field of the output pixel relate to the previous layer?
 
 </details>
+
 <details>
 <summary>Hint 3</summary>
+
 Can you find a pattern or a recurrence relationship?
 
 </details>
+
 <details>
 <summary>Solution</summary>
 
-To determine the receptive field size, consider the kernel as a square grid of side length $k$. When a kernel slides over an image, the pixel at the top-right of the kernel is $(k - 1)$ pixels to the right of the pixel at the top-left. So the **width** (or side length) of the receptive field increases by $(k - 1)$ at each layer.
+To determine the receptive field size, consider the kernel as a square grid of side length $k_i$. When a kernel slides over an image, the pixel at the top-right of the kernel is $(k_i - 1)$ pixels to the right of the pixel at the top-left. So the **length** of the receptive field increases by $(k_i - 1)$ at each layer.
 
-If the network has $n$ layers with kernel sizes $k_1, k_2, \dots, k_n$, the total span from the top-left to the top-right corner of the receptive field is:
+If the network has $n$ layers with kernel sizes $k_1, k_2, \dots, k_n$, the total distance from the top-left to the top-right corner of the receptive field is $\sum_{i=1}^{n}(k_i - 1)$.
 
-$
-\sum_{i=1}^{n}(k_i - 1)
-$
-
-Since the field is square and includes the initial pixel, we must add $1$ to get the final side length:
-
-$
-\text{Receptive Field Length} = \sum_{i=1}^{n}(k_i - 1) + 1
-$
+Since the field is square and includes the initial pixel, we must add $1$ to get the final side length:  
+$\text{Receptive Field Length} = \sum_{i=1}^{n}(k_i - 1) + 1$
 
 <details>
 <summary>Code</summary>
@@ -290,27 +304,33 @@ signed main()
 
 </details>
 </details>
+
+<details>
+<summary>Hint 4</summary>
+The kernels are square and so is the receptive field.
+</details>
+
+<details>
+<summary>Hint 5</summary>
+Think in 1D instead of 2D for easy understanding.
+</details>
+
 <details>
 <summary>Alternate Solution</summary>
 
-Our objective is to determine the size of the receptive field at the input layer, (let's denote this as $r_0$). How should we approach this? If we carefully examine the illustration given in the problem statement, we can observe a hierarchical or _"pyramidal"_ relationship between the receptive field sizes of successive layers. Specifically, each layer’s receptive field is built upon the receptive field of the previous layer, expanding outward as we move closer to the input. This pattern can be leveraged to express the receptive field at any layer in terms of the layers above it, ultimately leading us to a general formula for $r_0$.\
-We already know that the receptive field at the final layer, $r_n$, is always $1$, since each output feature depends only on itself. The key, then, is to find a general way to express $r_{i-1}$ in terms of $r_i$ for each layer.\
-To make the problem even more approachable, let's visualize our neural network as a sequence of 1-dimensional convolutional layers. This simplification is valid because convolutional kernels are usually symmetric across their dimensions. Even in cases with asymmetric kernels, the same reasoning can be applied independently to each dimension. With that in mind, let’s consider a straightforward 1D convolutional neural network:
-![1dConv](images/1D_conv_example.png)
+Our objective is to determine the size of the receptive field at the input layer (denoted as $r_0$). How should we approach this?
 
-If we look at the relationship between Layer 2 and Layer 1 it is pretty easy to observe why the receptive field size is 3. A kernel with size $k_2=3$ is applied once. But when we go from Layer 1 to Layer 0 things start to get a bit more complicated. The observation here is that there is an overlap of $(k_1 - 1)$ pixels for each convolution operation on Layer 0 using the kernel $k_1=5$. So the resultant receptive field would become $r_0 = (k_1-1)+r_1$. Without the loss of generality, we can therefore claim that for consective layers $i-1$ and $i$,
-$ r\_{i-1} = k_i - 1 + r_i $
-Let’s unroll the recurrence relation backward for clarity. Starting from the final layer ($r_n = 1$):
+Each layer’s receptive field builds on the previous layer, expanding outward. If we consider the receptive field size at layer $i$ as $r_i$, then we can express:
 
-$
-r_{n-1} = r_n + (k_n - 1) = 1 + (k_n - 1) = k_n\\
-\Rightarrow r_{n-2} - k_{n-1} + 1 = k_n\\
-\Rightarrow r_{n-2} = k_{n} + k_{n-1} - 1\\
-\Rightarrow r_{n-3} - k_{n-2} + 1 = k_{n} + k_{n-1} - 1\\
-\Rightarrow r_{n-3} = k_{n} + k_{n-1} + k_{n-2} - 2\\
-\vdots\\\vdots\\
-r_0 = \sum_{i=1}^n k_i - (n - 1) = \sum_{i=1}^n k_i - n + 1
-$
+$r_{i-1} = (k_i - 1) + r_i$
+
+Since the output layer has a receptive field of $r_n = 1$, we can work backwards:
+
+- $r_{n-1} = r_n + (k_n - 1) = 1 + (k_n - 1) = k_n$
+- $r_{n-2} = r_{n-1} + (k_{n-1} - 1) = k_n + k_{n-1} - 1$
+- $r_{n-3} = r_{n-2} + (k_{n-2} - 1) = k_n + k_{n-1} + k_{n-2} - 2$
+- $\dots$
+- $r_0 = \sum_{i=1}^n k_i - (n - 1) = \sum_{i=1}^n k_i - n + 1$
 
 Thus, we obtain $r_0$, which is the receptive field at Layer 0.
 
@@ -359,7 +379,7 @@ Problem Setter: [Akib Haider](https://codeforces.com/profile/_akibhaider_)
 
 Difficulty: Medium
 
-Tags: Brute Force, Implementation, Strings
+Tag(s): Brute Force, Implementation, Strings
 
 <details>
 <summary>Hint</summary>
@@ -665,7 +685,7 @@ Problem Setter: [Irfanur Rahman Rafio](https://codeforces.com/profile/Rafio)
 
 Difficulty: Hard
 
-Tags: Greedy, Binary Search
+Tag(s): Greedy, Binary Search
 
 <details>
 <summary>Hint 1</summary>
@@ -1025,44 +1045,67 @@ Problem Setter: [Mahiul Kabir](https://codeforces.com/profile/the-NerdNinja)
 
 Difficulty: Easy-Medium
 
-Tags: Range Query
+Tag(s): Range Query
 
 <details>
-<summary><strong>Hint 0</strong> : How can you find the maximum absolute difference of 2 elements of any set?</summary>
-  <p>The maximum difference can be found by taking the <code>max(S)</code> and <code>min(S)</code> elements from the set.</p>
-  <p><strong>Why?</strong> Because if the elements are <code>x, y</code> with <code>x &lt; y</code>, choosing a smaller <code>x'</code> would only increase <code>y − x'</code>, so the extreme values give the maximum.</p>
+<summary>Hint 1</summary>
+
+How can you find the maximum absolute difference of two elements in a set?
+
+<details>
+<summary>Answer</summary>
+
+The maximum difference can be found by taking the maximum and the minimum elements from the set.
+Why? because if the elements were x, y; where x < y, taking a smaller element x' will always improve the result.
+
+</details>
+</details>
+
+<details>
+<summary>Hint 2</summary>
+
+What are we left with when we remove range [l, r] form the array?
+
+<details>
+<summary>Answer</summary>
+
+We have some prefix of the array, and some suffix.
+
+</details>
+</details>
+
+<details>
+<summary>Hint 3</summary>
+
+How can you find the maximum absolute difference of two elements in the union of two sets?
+
+<details>
+<summary>Answer</summary>
+
+The maximum difference can be found by taking the maximum and the minimum elements from the set.
+Why? because if the elements were x, y; where x < y, taking a smaller element x' will always improve the result.
+
+</details>
 
 </details>
 
 <details>
-  <summary><strong>Hint 1</strong> : What are we left with when we remove range [l, r] from the array?</summary>
-  <p>We have some <strong>prefix</strong> of the array and some <strong>suffix</strong>.</p>
-</details>
+<summary>Solution</summary>
+
+Obviously, the brute force approach is too slow to pass the time limit.
+
+From the Hints, we deduce that we need to find the maximum and the minimum elements of prefix[$A_1$ to $A_{l-1}$], and suffix[$A_{r+1}$, $A_n$]. This can be done with the classic trick: **_prefix arrays_**.
+We precompute 4 arrays,
+
+- prefix min array
+- prefix max array
+- suffix min array
+- suffix max array
+
+and combine the results accordingly.
 
 <details>
-  <summary><strong>Solution</strong></summary>
-  <p>The brute-force approach is too slow. From the hints, we see that after removing <code>[l, r]</code> we only need:</p>
-  <ul>
-    <li>the minimum and maximum of the prefix <code>A[1 … l−1]</code></li>
-    <li>the minimum and maximum of the suffix <code>A[r+1 … n]</code></li>
-  </ul>
-  <p>Precompute four arrays in O(n) time:</p>
-  <ul>
-    <li><code>pref_Min[i]</code> = min of <code>A[1 … i]</code></li>
-    <li><code>pref_Max[i]</code> = max of <code>A[1 … i]</code></li>
-    <li><code>suf_Min[i]</code> = min of <code>A[i … n]</code></li>
-    <li><code>suf_Max[i]</code> = max of <code>A[i … n]</code></li>
-  </ul>
-  <p>Then for any query <code>(l, r)</code>, we can combine the corresponding prefix and suffix minimums and maximums as follows, in O(1):</p>
-  <pre><code>minVal   = min(pref_Min[l-1], suf_Min[r+1])
-maxVal   = max(pref_Max[l-1], suf_Max[r+1])
-max_diff = maxVal - minVal
-  </code></pre>
-  And output their difference as our answer.
-</details>
-
-<details>
-<summary><strong>Code</strong></summary>
+<summary>Code</summary>
 
 ```cpp
 #include <bits/stdc++.h>
@@ -1138,45 +1181,41 @@ Problem Setter: [Abdullah Abrar](https://codeforces.com/profile/lelbaba)
 
 Difficulty: Easy
 
-Tags: Math
+Tag(s): Math
 
 <details>
 <summary>Hint</summary>
 
-Can you construct 4 simultaneous equations with which you can solve the 4 unknowns? A smart adoption of substitution and elimination should help us solve these equations.
+Construct four simultaeneous equations and find the four unknown values.
 
 </details>
 
 <details>
 <summary>Solution</summary>
 
-Let's denote the actual influence values of Shabab, Hamim, Rafi, and Abdullah with $w$, $x$, $y$, and $z$ respectively. Therefore, the given inputs can be written as,
+Let's denote the actual influence values of Shabab, Hamim, Rafi, and Abdullah with $A$, $B$, $C$, and $D$ respectively. Therefore, the given inputs can be written as:
 
-$
-a = \frac{x+y+z}{3} \Rightarrow 3a=x+y+z\\
-b = \frac{w+y+z}{3} \Rightarrow 3b=w+y+z\\
-c = \frac{w+x+z}{3} \Rightarrow 3c=w+x+z\\
-d = \frac{w+x+y}{3} \Rightarrow 3d=w+x+y
-$
+$a = \dfrac{B+C+D}{3} \Rightarrow 3a = B + C + D$
 
-Summing these equations yield the following relationship:
+$b = \dfrac{A+C+D}{3} \Rightarrow 3b = A + C + D$
 
-$
-3a+3b+3c+3d=3w+3x+3y+3z\\
-\Rightarrow 3\cdot(a+b+c+d)=3\cdot(w+x+y+z)\\
-\Rightarrow a+b+c+d=w+x+y+z
-$
+$c = \dfrac{A+B+D}{3} \Rightarrow 3c = A + B + D$
 
-Now, let's denote the aggregate influence of all the 4 lords using $s=w+x+y+z$, which also means $s=a+b+c+d$. The aforementioned set of 4 equations can then be rewritten as,
+$d = \dfrac{A+B+C}{3} \Rightarrow 3d = A + B + C$
 
-$
-3a = s-w \Rightarrow w = s - 3a\\
-3b = s-x \Rightarrow x = s - 3b\\
-3c = s-y \Rightarrow y = s - 3c\\
-3d = s-z \Rightarrow z = s - 3d
-$
+Summing these equations yields the following relationship:  
+$3a + 3b + 3c + 3d = 3A + 3B + 3C + 3D$  
+$\Rightarrow 3(a + b + c + d) = 3(A + B + C + D)$  
+$\Rightarrow a + b + c + d = A + B + C + D$
 
-Consequently, we end up inferring the clouts $w$, $x$, $y$, and $z$ of all 4 lords Shabab, Hamim, Rafi, and Abdullah respectively.
+Now, let's denote the aggregate influence of all 4 lords using $s = A + B + C + D$, which also means $s = a + b + c + d$. The aforementioned set of 4 equations can then be rewritten as:
+
+$3a = s - A \Rightarrow A = s - 3a$  
+$3b = s - B \Rightarrow B = s - 3b$  
+$3c = s - C \Rightarrow C = s - 3c$  
+$3d = s - D \Rightarrow D = s - 3d$
+
+Consequently, we end up inferring the clouts $A$, $B$, $C$, and $D$ of all 4 lords Shabab, Hamim, Rafi, and Abdullah respectively.
 
 <details>
 <summary>Code</summary>
@@ -1235,7 +1274,7 @@ Problem Setter: [Irfanur Rahman Rafio](https://codeforces.com/profile/Rafio)
 
 Difficulty: Medium
 
-Tags: Geometry, Interactive, Game Theory
+Tag(s): Geometry, Interactive, Game Theory
 
 <details>
 <summary>Hint 1</summary>
