@@ -109,8 +109,7 @@ Difficulty: Giveaway
 <details>
 <summary>Hint</summary>
 
-This problem has no input.\
-_This is a trivial white lie._
+This problem has no input.
 
 </details>
 
