@@ -22,15 +22,15 @@ Let’s begin by understanding what happens when the **Cloning Spell** is used *
 
 When the _i-th_ wizard casts the spell:
 
-- All **original** wizards from position `1` to `i-1` are cloned.
-- These clones are inserted immediately before wizard `i`.
+- All _original_ wizards from position $1$ to $i - 1$ are cloned.
+- These clones are inserted immediately before wizard $i$.
 - The rest shift right accordingly.
-- The cloned segment adds `sum(a[0] to a[i-2])` to the total magical potential.
+- The cloned segment adds $sum(a[0] to a[i - 2])$ to the total magical potential.
 
-Let’s call this value `prefix[i - 1]` (the sum of the first `i - 1` elements).  
-So the **gain** from this spell is `prefix[i - 1]`.
+Let’s call this value $prefix[i - 1]$ (the sum of the first $i - 1$ elements).  
+So the **gain** from this spell is $prefix[i - 1]$.
 
-Thus, if you’re allowed to cast the spell **once**, the optimal wizard is the one that gives the **maximum** `prefix[i - 1]`.
+Thus, if you’re allowed to cast the spell **once**, the optimal wizard is the one that gives the **maximum** $prefix[i - 1]$.
 
 Now observe:
 
@@ -41,12 +41,12 @@ Now observe:
 This means:
 
 - The **best wizard to clone once** is also the best wizard to clone multiple times.
-- Each additional spell adds the same fixed value `prefix[i - 1]`.
+- Each additional spell adds the same fixed value $prefix[i - 1]$.
 
 Therefore, to maximize the total potential:
 
-1. Choose the `i` that maximizes `prefix[i - 1]`.
-2. Add `k × prefix[i - 1]` to the original sum of the array.
+1. Choose the $i$ that maximizes $prefix[i - 1]$.
+2. Add $k × prefix[i - 1]$ to the original sum of the array.
 
 <summary>Code</summary>
 
@@ -110,7 +110,7 @@ Difficulty: Giveaway
 <summary>Hint</summary>
 
 This problem has no input.\
-*This is a trivial white lie.*
+_This is a trivial white lie._
 
 </details>
 
@@ -202,6 +202,7 @@ Problem Setter: [Sabbir Ahmed](https://cse.iutoic-dhaka.edu/profile/sabbir/)
 Difficulty: Easy
 
 Tags: Math
+
 <details>
 <summary>Hint 1</summary>
 
@@ -293,14 +294,15 @@ signed main()
 <details>
 <summary>Alternate Solution</summary>
 
-Our objective is to determine the size of the receptive field at the input layer, (let's denote this as $r_0$). How should we approach this? If we carefully examine the illustration given in the problem statement, we can observe a hierarchical or *"pyramidal"* relationship between the receptive field sizes of successive layers. Specifically, each layer’s receptive field is built upon the receptive field of the previous layer, expanding outward as we move closer to the input. This pattern can be leveraged to express the receptive field at any layer in terms of the layers above it, ultimately leading us to a general formula for $r_0$.\
+Our objective is to determine the size of the receptive field at the input layer, (let's denote this as $r_0$). How should we approach this? If we carefully examine the illustration given in the problem statement, we can observe a hierarchical or _"pyramidal"_ relationship between the receptive field sizes of successive layers. Specifically, each layer’s receptive field is built upon the receptive field of the previous layer, expanding outward as we move closer to the input. This pattern can be leveraged to express the receptive field at any layer in terms of the layers above it, ultimately leading us to a general formula for $r_0$.\
 We already know that the receptive field at the final layer, $r_n$, is always $1$, since each output feature depends only on itself. The key, then, is to find a general way to express $r_{i-1}$ in terms of $r_i$ for each layer.\
 To make the problem even more approachable, let's visualize our neural network as a sequence of 1-dimensional convolutional layers. This simplification is valid because convolutional kernels are usually symmetric across their dimensions. Even in cases with asymmetric kernels, the same reasoning can be applied independently to each dimension. With that in mind, let’s consider a straightforward 1D convolutional neural network:
 ![1dConv](images/1D_conv_example.png)
 
 If we look at the relationship between Layer 2 and Layer 1 it is pretty easy to observe why the receptive field size is 3. A kernel with size $k_2=3$ is applied once. But when we go from Layer 1 to Layer 0 things start to get a bit more complicated. The observation here is that there is an overlap of $(k_1 - 1)$ pixels for each convolution operation on Layer 0 using the kernel $k_1=5$. So the resultant receptive field would become $r_0 = (k_1-1)+r_1$. Without the loss of generality, we can therefore claim that for consective layers $i-1$ and $i$,
-$$ r_{i-1} = k_i - 1 + r_i $$
+$$ r\_{i-1} = k_i - 1 + r_i $$
 Let’s unroll the recurrence relation backward for clarity. Starting from the final layer ($r_n = 1$):
+
 $$
 r_{n-1} = r_n + (k_n - 1) = 1 + (k_n - 1) = k_n\\
 \Rightarrow r_{n-2} - k_{n-1} + 1 = k_n\\
@@ -310,7 +312,9 @@ r_{n-1} = r_n + (k_n - 1) = 1 + (k_n - 1) = k_n\\
 \vdots\\\vdots\\
 r_0 = \sum_{i=1}^n k_i - (n - 1) = \sum_{i=1}^n k_i - n + 1
 $$
+
 Thus, we obtain $r_0$, which is the receptive field at Layer 0.
+
 <details>
 <summary>Code</summary>
 
@@ -373,6 +377,7 @@ This problem can be solved using a brute-force approach.
 The main task is to check whether a given string (a soldier’s name) appears in a straight line in a 2D grid. Since the grid size is small (the total number of characters is at most 1000 across all test cases), it is efficient enough to simply check **every possible starting position** in the grid and try to match the string in **each of the 8 directions** (horizontal, vertical, and both diagonals).
 
 For each name:
+
 - Start at every position in the grid.
 - For each direction from the 8 possible directions, try to match each character in the string.
 - If the full string matches without going out of bounds, count it.
@@ -692,12 +697,19 @@ For this problem, analyze special cases like:
 <details>
 <summary>Hint 4</summary>
 
-It is always optimal to visit _delta-positive_ houses before _delta-negative_ houses.
+If Zunaid took loans whenever needed instead of a single large loan at the beginning, the total amount borrowed would remain the same.
 
 </details>
 
 <details>
 <summary>Hint 5</summary>
+
+It is always optimal to visit _delta-positive_ houses before _delta-negative_ houses.
+
+</details>
+
+<details>
+<summary>Hint 6</summary>
 
 What to do if all the houses are _delta-positive_ or all the houses are _delta-negative_?
 
@@ -795,7 +807,7 @@ Minimum balance: $\min(x - g_2, x + \delta_2 - g_1)$
 
 _Step 1: Delta-positive houses must be visited before delta-negative houses._
 
-Assume $\delta_1 \ge 0$ and $\delta_2 < 0$.
+Assume $\delta_1 > 0$ and $\delta_2 < 0$.
 
 Now,
 
@@ -808,7 +820,7 @@ Clearly, both terms in Option 1 have a smaller counterparts in Option 2. Hence, 
 
 _Step 2: Among delta-positive houses, those with smaller $g$ must be visited earlier._
 
-Assume both $\delta_1, \delta_2 \ge 0$ and $g_1 > g_2$.
+Assume both $\delta_1, \delta_2 > 0$ and $g_1 > g_2$.
 
 Now,
 
@@ -822,9 +834,6 @@ Both terms in Option 2 have a smaller counterpart in Option 1. So, the minimum b
 _Step 3: Among delta-negative houses, those with larger $r$ must be visited earlier._
 
 Assume both $\delta_1, \delta_2 < 0$ and $r_1 > r_2$.
-
-In Option 1, the minimum balance is $x + \delta_1 - g_2$ ; because $x - g1 = x + \delta_1 - r_1$, $r_1 < r_2 < g_ 2$ and $x + \delta_1 - g_2 < x + \delta_1 - r_1$.  
-In Option 2, the minimum balance is $\min(x - g_2, x + \delta_2 - g_1)$.
 
 Now,
 
@@ -860,6 +869,26 @@ bool comp(pair<int,int> p1, pair<int,int> p2)
     return delta1 > delta2; // Visit delta-positive houses before delta-negative houses
 }
 
+bool enough(vector<pair<int,int>>& v, LL loan)
+{
+    int give, receive;
+    LL balance = loan;
+
+    for(auto it: v)
+    {
+        give = it.first;
+        receive = it.second;
+
+        balance -= give;
+
+        if(balance < 0) return 0;
+
+        balance += receive;
+    }
+
+    return 1;
+}
+
 
 
 void pre()
@@ -880,18 +909,86 @@ void solve(int tc)
 
     sort(v.begin(), v.end(), comp);
 
-    int give, receive;
+    LL lo = 0, hi = 2e14, mid;
+    while(lo <= hi)
+    {
+        mid = (lo + hi) / 2;
+
+        if(enough(v, mid)) hi = mid - 1;
+        else lo = mid + 1;
+    }
+
+    cout << lo;
+}
+
+signed main()
+{
+    pre();
+
+    int tc, tt = 1;
+    cin >> tt;
+
+    for(tc = 1; tc <= tt; tc++)
+    {
+        // cout << "Case " << tc << ": ";
+        solve(tc);
+        cout << endl;
+    }
+
+    return 0;
+}
+```
+
+</details>
+
+<details>
+<summary>Code</summary>
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+#define fastio ios_base::sync_with_stdio(0); cin.tie(0)
+
+using LL = long long;
+
+bool comp(pair<int,int> p1, pair<int,int> p2)
+{
+    auto [g1, r1] = p1;
+    auto [g2, r2] = p2;
+
+    int delta1 = r1 - g1, delta2 = r2 - g2;
+
+    if(delta1 > 0 && delta2 > 0) return g1 < g2;
+    if(delta1 <= 0 && delta2 <= 0) return r1 > r2;
+    return delta1 > delta2;
+}
+
+
+
+void pre()
+{
+    fastio;
+
+
+}
+
+void solve(int tc)
+{
+    int i, n;
+    cin >> n;
+
+    vector<pair<int,int>> v(n);
+    for(auto &it: v) cin >> it.first;
+    for(auto &it: v) cin >> it.second;
+    sort(v.begin(), v.end(), comp);
+
     LL balance = 0, ans = 0;
 
-    for(auto it: v)
+    for(auto [give, receive]: v)
     {
-        give = it.first;
-        receive = it.second;
-
         balance -= give;
-
         ans = max(ans, -balance);
-
         balance += receive;
     }
 
@@ -915,6 +1012,8 @@ signed main()
     return 0;
 }
 ```
+
+</details>
 
 </details>
 </details>
@@ -1026,8 +1125,8 @@ int main(){
 }
 
 ```
-</details>
 
+</details>
 
 </details>
 </details>
@@ -1053,26 +1152,33 @@ Can you construct 4 simultaneous equations with which you can solve the 4 unknow
 <summary>Solution</summary>
 
 Let's denote the actual influence values of Shabab, Hamim, Rafi, and Abdullah with $w$, $x$, $y$, and $z$ respectively. Therefore, the given inputs can be written as,
+
 $$
 a = \frac{x+y+z}{3} \Rightarrow 3a=x+y+z\\
 b = \frac{w+y+z}{3} \Rightarrow 3b=w+y+z\\
 c = \frac{w+x+z}{3} \Rightarrow 3c=w+x+z\\
 d = \frac{w+x+y}{3} \Rightarrow 3d=w+x+y
 $$
+
 Summing these equations yield the following relationship:
+
 $$
 3a+3b+3c+3d=3w+3x+3y+3z\\
 \Rightarrow 3\cdot(a+b+c+d)=3\cdot(w+x+y+z)\\
 \Rightarrow a+b+c+d=w+x+y+z
 $$
+
 Now, let's denote the aggregate influence of all the 4 lords using $s=w+x+y+z$, which also means $s=a+b+c+d$. The aforementioned set of 4 equations can then be rewritten as,
+
 $$
 3a = s-w \Rightarrow w = s - 3a\\
 3b = s-x \Rightarrow x = s - 3b\\
 3c = s-y \Rightarrow y = s - 3c\\
 3d = s-z \Rightarrow z = s - 3d
 $$
+
 Consequently, we end up inferring the clouts $w$, $x$, $y$, and $z$ of all 4 lords Shabab, Hamim, Rafi, and Abdullah respectively.
+
 <details>
 <summary>Code</summary>
 
