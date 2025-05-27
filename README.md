@@ -40,6 +40,7 @@ Invitation: https://codeforces.com/contestInvitation/14c968519bdf2a0c211cb165402
 | [Sheikh Farhan Adib Auvro](https://codeforces.com/profile/VolcaBit)      | Problem Tester                          |
 | [Nayeem Hossain](https://codeforces.com/profile/flying_saucer)           | Problem Tester                          |
 | [Saom bin Khaled](https://codeforces.com/profile/greenbinjack)           | Problem Tester                          |
+| [Md Farhan Ishmam](https://cse.iutoic-dhaka.edu/profile/farhanishmam/)   | Problem Tester                          |
 
 ## Previous Editions
 
