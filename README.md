@@ -14,7 +14,7 @@ Invitation: https://codeforces.com/contestInvitation/14c968519bdf2a0c211cb165402
 | ----------------------------- | --------------------------------------- |
 | Reaz Hassan Joarder           | Contest Director, **Problem Setter**    |
 | Sabbir Ahmed                  | Contest Coordinator, **Problem Setter** |
-| Rifat Ryan                    | Contest Coordinator                     |
+| Syed Rifat Raiyan             | Contest Coordinator                     |
 | Irfanur Rahman Rafio          | Contest Coordinator, **Problem Setter** |
 | Abdullah Abrar                | Contest Coordinator, **Problem Setter** |
 | Zunaid Ul Alam                | Contest Coordinator                     |
