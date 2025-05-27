@@ -662,7 +662,7 @@ int main()
 <details>
 <summary>Problem E - Eid Salami</summary>
 
-Problem Setter: [Rafio](https://codeforces.com/profile/Rafio)
+Problem Setter: [Irfanur Rahman Rafio](https://codeforces.com/profile/Rafio)
 
 Difficulty: Hard
 
@@ -1232,7 +1232,7 @@ signed main()
 <details>
 <summary>Problem H - Hex Game</summary>
 
-Problem Setter: [Rafio](https://codeforces.com/profile/Rafio)
+Problem Setter: [Irfanur Rahman Rafio](https://codeforces.com/profile/Rafio)
 
 Difficulty: Medium
 
@@ -1343,3 +1343,34 @@ signed main()
 </details>
 </details>
 </details>
+
+## Credits
+
+Reaz Hassan Joarder – Contest Director  
+Sabbir Ahmed – Contest Coordinator and Problem Setter  
+Rifat Ryan – Contest Coordinator  
+Irfanur Rahman Rafio – Contest Coordinator and Problem Setter  
+Abdullah Abrar – Contest Coordinator and Problem Setter  
+Zunaid Ul Alam – Contest Coordinator  
+Adib Farhan – Contest Coordinator  
+Akib Haider – Problem Setter  
+Md. Sakib Hossain – Problem Developer  
+Mir Sayad – Problem Developer  
+Jannatul Fardus Rakhi – Problem Setter  
+Fariya Ahmed – Problem Developer  
+Mehreen Hossain Chowdhury – Problem Developer  
+Md. Abu Bakor Siddique Dhrubo – Problem Developer  
+Mahiul Kabir – Problem Setter  
+Sohom Saboyob Sattyam – Problem Tester  
+Md. Ashraful Islam – Problem Tester  
+Obidit Islam – Problem Tester  
+Rahatut Tahrim Mounota – Problem Tester  
+Maisha Sanjida – Problem Tester  
+Rafat Abdullah Pantho – Problem Tester  
+Rahinur bin Naushad – Problem Tester  
+Nayeem Hossain – Problem Tester  
+Saom bin Khaled – Problem Tester  
+Abrar Mahmud Hasan – Problem Tester  
+Wasi ul Habib – Problem Tester  
+Multazam Mahmud – Problem Tester  
+Sheikh Farhan Adib Auvro – Problem Tester
