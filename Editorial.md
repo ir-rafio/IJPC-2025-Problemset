@@ -226,15 +226,15 @@ To determine the receptive field size, consider the kernel as a square grid of s
 
 If the network has $n$ layers with kernel sizes $k_1, k_2, \dots, k_n$, the total span from the top-left to the top-right corner of the receptive field is:
 
-$$
+$
 \sum_{i=1}^{n}(k_i - 1)
-$$
+$
 
 Since the field is square and includes the initial pixel, we must add $1$ to get the final side length:
 
-$$
+$
 \text{Receptive Field Length} = \sum_{i=1}^{n}(k_i - 1) + 1
-$$
+$
 
 <details>
 <summary>Code</summary>
@@ -299,10 +299,10 @@ To make the problem even more approachable, let's visualize our neural network a
 ![1dConv](images/1D_conv_example.png)
 
 If we look at the relationship between Layer 2 and Layer 1 it is pretty easy to observe why the receptive field size is 3. A kernel with size $k_2=3$ is applied once. But when we go from Layer 1 to Layer 0 things start to get a bit more complicated. The observation here is that there is an overlap of $(k_1 - 1)$ pixels for each convolution operation on Layer 0 using the kernel $k_1=5$. So the resultant receptive field would become $r_0 = (k_1-1)+r_1$. Without the loss of generality, we can therefore claim that for consective layers $i-1$ and $i$,
-$$ r\_{i-1} = k_i - 1 + r_i $$
+$ r\_{i-1} = k_i - 1 + r_i $
 Let’s unroll the recurrence relation backward for clarity. Starting from the final layer ($r_n = 1$):
 
-$$
+$
 r_{n-1} = r_n + (k_n - 1) = 1 + (k_n - 1) = k_n\\
 \Rightarrow r_{n-2} - k_{n-1} + 1 = k_n\\
 \Rightarrow r_{n-2} = k_{n} + k_{n-1} - 1\\
@@ -310,7 +310,7 @@ r_{n-1} = r_n + (k_n - 1) = 1 + (k_n - 1) = k_n\\
 \Rightarrow r_{n-3} = k_{n} + k_{n-1} + k_{n-2} - 2\\
 \vdots\\\vdots\\
 r_0 = \sum_{i=1}^n k_i - (n - 1) = \sum_{i=1}^n k_i - n + 1
-$$
+$
 
 Thus, we obtain $r_0$, which is the receptive field at Layer 0.
 
@@ -1152,29 +1152,29 @@ Can you construct 4 simultaneous equations with which you can solve the 4 unknow
 
 Let's denote the actual influence values of Shabab, Hamim, Rafi, and Abdullah with $w$, $x$, $y$, and $z$ respectively. Therefore, the given inputs can be written as,
 
-$$
+$
 a = \frac{x+y+z}{3} \Rightarrow 3a=x+y+z\\
 b = \frac{w+y+z}{3} \Rightarrow 3b=w+y+z\\
 c = \frac{w+x+z}{3} \Rightarrow 3c=w+x+z\\
 d = \frac{w+x+y}{3} \Rightarrow 3d=w+x+y
-$$
+$
 
 Summing these equations yield the following relationship:
 
-$$
+$
 3a+3b+3c+3d=3w+3x+3y+3z\\
 \Rightarrow 3\cdot(a+b+c+d)=3\cdot(w+x+y+z)\\
 \Rightarrow a+b+c+d=w+x+y+z
-$$
+$
 
 Now, let's denote the aggregate influence of all the 4 lords using $s=w+x+y+z$, which also means $s=a+b+c+d$. The aforementioned set of 4 equations can then be rewritten as,
 
-$$
+$
 3a = s-w \Rightarrow w = s - 3a\\
 3b = s-x \Rightarrow x = s - 3b\\
 3c = s-y \Rightarrow y = s - 3c\\
 3d = s-z \Rightarrow z = s - 3d
-$$
+$
 
 Consequently, we end up inferring the clouts $w$, $x$, $y$, and $z$ of all 4 lords Shabab, Hamim, Rafi, and Abdullah respectively.
 
