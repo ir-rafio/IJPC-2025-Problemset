@@ -13,7 +13,7 @@ Invitation: https://codeforces.com/contestInvitation/14c968519bdf2a0c211cb165402
 | ------------------------------------------------------------------------ | --------------------------------------- |
 | [Reaz Hassan Joarder](https://codeforces.com/profile/ssshanto)           | Contest Director, **Problem Setter**    |
 | [Sabbir Ahmed](https://cse.iutoic-dhaka.edu/profile/sabbir/)             | Contest Coordinator, **Problem Setter** |
-| [Rifat Ryan](https://codeforces.com/profile/Starscream-11813)            | Contest Coordinator                     |
+| [Syed Rifat Raiyan](https://codeforces.com/profile/Starscream-11813)     | Contest Coordinator                     |
 | [Irfanur Rahman Rafio](https://codeforces.com/profile/rafio)             | Contest Coordinator, **Problem Setter** |
 | [Abdullah Abrar](https://codeforces.com/profile/lelbaba)                 | Contest Coordinator, **Problem Setter** |
 | [Zunaid Ul Alam](https://codeforces.com/profile/ThisWasUnplanned)        | Contest Coordinator                     |
