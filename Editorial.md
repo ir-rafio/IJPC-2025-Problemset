@@ -1110,7 +1110,7 @@ Tags: Range Query, Data Structures
 <details>
 <summary>Hint 1</summary>
 
-How can you find the maximum absolute difference of any two elements of a set with size at least 2?
+How can you find the maximum absolute difference of any two elements of a set $S$ with size at least 2?
 
 <details>
 <summary>Answer</summary>
