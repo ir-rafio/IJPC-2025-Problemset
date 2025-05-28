@@ -25,16 +25,16 @@ Invitation: https://codeforces.com/contestInvitation/14c968519bdf2a0c211cb165402
 | [Fariya Ahmed](https://codeforces.com/profile/nazyalensky)               | Problem Developer                       |
 | [Mehreen Hossain Chowdhury](https://codeforces.com/profile/_yuzukii)     | Problem Developer                       |
 | [Md. Abu Bakor Siddique Dhrubo](https://codeforces.com/profile/AbDhrubo) | Problem Developer                       |
-| [Mahiul Kabir](https://codeforces.com/profile/the-NerdNinja)             | **Problem Setter**                      |
+| [Mahiul Kabir](https://www.linkedin.com/in/mahiulkabir/)             | **Problem Setter**                      |
 | [Sohom Saboyob Sattyam](https://codeforces.com/profile/sssatty)          | Problem Tester                          |
 | [Saibul Haque Jessan](https://codeforces.com/profile/Ryexocious)         | Problem Tester                          |
 | [Md. Ashraful Islam](https://codeforces.com/profile/TheMorningStar)      | Problem Tester                          |
-| [Obidit Islam](https://codeforces.com/profile/tashobi_02)                | Problem Tester                          |
-| [Rahatut Tahrim Mounota](https://codeforces.com/profile/rahatut22)       | Problem Tester                          |
+| [Obidit Islam](https://github.com/tashobi02)                | Problem Tester                          |
+| [Rahatut Tahrim Mounota](https://github.com/Rahatut)       | Problem Tester                          |
 | [Maisha Sanjida](https://codeforces.com/profile/maisha.sanjida06)        | Problem Tester                          |
 | [Rafat Abdullah Pantho](https://codeforces.com/profile/NebulaKnight)     | Problem Tester                          |
 | [Rahinur bin Naushad](https://codeforces.com/profile/Foot_Ball)          | Problem Tester                          |
-| [Abrar Mahmud Hasan](https://codeforces.com/profile/alchem.ist)          | Problem Tester                          |
+| [Abrar Mahmud Hasan](https://www.linkedin.com/in/abrar-mahmud-hasan-75a630222/)          | Problem Tester                          |
 | [Wasi ul Habib](https://codeforces.com/profile/CodingPariNaa)            | Problem Tester                          |
 | [Multazam Mahmud](https://codeforces.com/profile/Multazam_mahmud)        | Problem Tester                          |
 | [Sheikh Farhan Adib Auvro](https://codeforces.com/profile/VolcaBit)      | Problem Tester                          |

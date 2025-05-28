@@ -10,10 +10,21 @@ Difficulty: Medium
 Tag(s): Greedy
 
 <details>
-<summary>Hint</summary>
+<summary> Hint 1</summary>
 
-What would be the optimal strategy for $k = 1$?
+ What would be the optimal strategy for $k = 1$?
+ </details>
 
+ <details>
+           
+ <summary> Hint 2</summary>
+ It is always optimal to apply the Cloning Spell at the same position i every time. Switching between wizards doesn’t improve the result. Why?
+
+</details>
+
+ <details>
+<summary> Hint 3</summary>
+Even though a cloned wizard can also cast the spell, casting the spell on a clone is equivalent to casting it on the original wizard (as the effect is identical). Therefore, you only need to consider the positions of original wizards when determining the optimal i.
 </details>
 
 <details>
