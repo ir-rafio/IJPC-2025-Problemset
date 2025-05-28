@@ -79,7 +79,7 @@ Final Formula:
   $$\textit{initialSum} = \sum_{i = 1}^{n } a[i]$$
 
 - Let
-  $$\textit{maxPrefixSum} = \max(\textit{prefixSum}[0], \textit{prefixSum}[1], \dots, \textit{prefixSum}[n - 1])$$
+  $$\textit{maxPrefixSum} = \max(\textit{prefixSum}[1], \textit{prefixSum}[1], \dots, \textit{prefixSum}[n - 1])$$
 
 Then, the total magical potential after applying the cloning spell up to $k$ times is given by:
 
