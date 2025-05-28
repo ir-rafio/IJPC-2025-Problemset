@@ -41,90 +41,102 @@ Even though a cloned wizard can cast the spell, the effect of a clone casting th
 <details>
 <summary>Solution</summary>
 
-Let’s begin by understanding what happens when the **Cloning Spell** is used **once**.
+Let's begin by understanding what happens when the **Cloning Spell** is used **once**.
 
 When the _i-th_ wizard casts the spell:
 
-- All _original_ wizards from position `1` to `i - 1` are cloned.
-- These clones are inserted immediately before wizard `i`.
+- The **first time** you cast the spell, you add a **_block_** (prefix) of original wizards.
+- All _original_ wizards from position $1$ to $i - 1$ are cloned.
+- These clones are inserted immediately before wizard $i$.
 - The rest shift right accordingly.
-- The cloned segment adds `sum(a[0] ... a[i - 1])` to the total magical potential.
+- The cloned segment adds $sum(a[1] ... a[i - 1])$ to the total magical potential.
 
 Now imagine you're allowed to **cast the spell only once**.
 
 To get the **maximum benefit**, you'd want to clone the **largest possible sum** of wizards.  
-This sum is exactly the **prefix sum** of the array up to index `i - 1`, i.e., `prefix[i - 1]`.
+This sum is exactly the **prefix sum** of the array up to index $i - 1$, i.e., $prefix[i - 1]$.
 
 So:
 
-- Try every position `i` from `1` to `n`, compute `prefix[i - 1]`, and choose the one with the **maximum prefix sum**.
+- Try every position $i$ from $1$ to $n$, compute $prefix[i - 1]$, and choose the one with the **maximum prefix sum**.
 - This value is the **gain** from one spell.
 
-Now what happens when you can cast the spell **up to `k` times**?
+Now what happens when you can cast the spell **up to $k$ times**?
 
 Here's the key insight:
 
-- Clones **can’t be cloned** again.
-- So the **first time** you cast the spell, you add a block of original wizards.
-- Every **additional time**, you're just adding that **same block** again (since only originals are cloned).
+- Clones **can't be cloned** again.
+- Whenever a spell is cast, the new wizards added to the lineup will always be a **_block_** (prefix) of the original wizard lineup.
 
 Thus:
 
-- The **gain from each additional spell** is **fixed** once you pick the best wizard `i`.
-- So if you pick the best `i`, you can gain `prefix[i - 1]` from each of the `k` spells.
+- The **gain from each additional spell** is **fixed** once you pick the best wizard $i$.
+- So if you pick the best $i$, you can gain $prefix[i - 1]$ from each of the $k$ spells.
 
 Final Formula:
 
-- Let `sum = sum(a[0] to a[n - 1])`
-- Let `max_net_gain = max(prefix[0] to prefix[n - 1])`
-- Then the answer is:
-  `sum + k × max_net_gain`
+- Let
+  $$\textit{initialSum} = \sum_{i = 1}^{n } a[i]$$
 
-<summary>Code</summary>
+- Let
+  $$\textit{maxPrefixSum} = \max(\textit{prefixSum}[0], \textit{prefixSum}[1], \dots, \textit{prefixSum}[n - 1])$$
+
+Then, the total magical potential after applying the cloning spell up to $k$ times is given by:
+
+<div align="center">
+
+$$\large\boldsymbol{\textit{answer} = \textit{initialSum} + k \times \textit{maxPrefixSum}}$$
+
+</div>
+
+**P.S. : The witches won the fight because all wizards must die .**
+
+# Code
 
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long
 
-
 int main() {
+   ios::sync_with_stdio(0);
+   cin.tie(0);
 
-          ios::sync_with_stdio(0);
-          cin.tie(0);
+   ll t = 1;
+   cin >> t;
 
-          ll t=1,i,j;
-          cin >> t;
-         while(t--)
-               {
-                 ll n,k,sum = 0;
-                 cin >> n >> k;
-                 vector <ll> v(n);
+   while (t--) {
+       ll n, k;
+       cin >> n >> k;
 
-                 for(i=0;i<n;i++){
-                    cin >> v[i];
-                    sum+= v[i];
-                 }
+       vector<ll> wizards(n+1);
+       ll initialSum = 0;
 
-                 vector <ll> pre(n,0);
-                 pre[0] = v[0];
+       for (ll i = 1; i <= n; i++) {
+           cin >> wizards[i];
+           initialSum += wizards[i];
+       }
 
-                 for (i=1;i<n;i++){
-                    pre[i] = pre[i-1] + v[i];
-                 }
-                 ll mx_net_gain = 0;
+       vector<ll> prefixSum(n+1);
+       prefixSum[1] = wizards[1];
 
-                 for (i=0;i<n;i++){
-                    mx_net_gain = max(mx_net_gain,pre[i]-v[i]);
-                 }
+       for (ll i = 1; i <= n; i++) {
+           prefixSum[i] = prefixSum[i - 1] + wizards[i];
+       }
 
-                 ll ans = k*(mx_net_gain) + sum ;
+       ll maxPrefixSum = 0;
+       for (ll i = 1; i < n; i++) {
+           maxPrefixSum = max(maxPrefixSum, prefixSum[i]);
+       }
 
-                 cout << ans << endl;
-               }
+       ll answer = initialSum + k * maxPrefixSum;
+       cout << answer << endl;
+   }
 
-    return 0;
+   return 0;
 }
+
+
 ```
 
 </details>
@@ -1342,7 +1354,7 @@ $c = \dfrac{A+B+D}{3} \Rightarrow 3c = A + B + D$
 
 $d = \dfrac{A+B+C}{3} \Rightarrow 3d = A + B + C$
 
-Summing these equations yields the following relationship:  
+Summing these equations:  
 $3a + 3b + 3c + 3d = 3A + 3B + 3C + 3D$  
 $\Rightarrow 3 \cdot (a + b + c + d) = 3 \cdot (A + B + C + D)$  
 $\Rightarrow a + b + c + d = A + B + C + D$
@@ -1350,12 +1362,12 @@ $\Rightarrow a + b + c + d = A + B + C + D$
 Let $s = A + B + C + D = a + b + c + d$
 
 Now:  
-$3a = s - A \Rightarrow A = s - 3a$  
-$3b = s - B \Rightarrow B = s - 3b$  
-$3c = s - C \Rightarrow C = s - 3c$  
-$3d = s - D \Rightarrow D = s - 3d$
+$3a = B + C + D = s - A \Rightarrow A = s - 3a$  
+$3b = A + C + D = s - B \Rightarrow B = s - 3b$  
+$3c = A + B + D = s - C \Rightarrow C = s - 3c$  
+$3d = A + B + C = s - D \Rightarrow D = s - 3d$
 
-This gives you the true influence of each lord. Since this is a direct equation, the time complexity is $O(1)$.
+This gives you the true influence of each lord. Since these are direct equations with simple mathematical operations, the time complexity is $O(1)$.
 
 <details>
 <summary>Code</summary>
