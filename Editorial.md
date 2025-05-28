@@ -1105,48 +1105,136 @@ Problem Setter: [Mahiul Kabir](https://codeforces.com/profile/the-NerdNinja)
 
 Difficulty: Easy-Medium
 
-Tags: Range Query
+Tags: Range Query, Data Structures
 
 <details>
-  <summary>Hint 1</summary>
-  <p>How can you find the maximum absolute difference of 2 elements of any set?</p>
-  
-  <details>
-    <summary>Answer</summary>
-    <p>The maximum difference can be found by taking the <code>max(S)</code> and <code>min(S)</code> elements from the set.</p>
-  </details>
+<summary>Hint 1</summary>
+
+How can you find the maximum absolute difference of any two elements of a set with size at least 2?
+
+<details>
+<summary>Answer</summary>
+
+The maximum absolute difference is: $\max(S) - \min(S)$.
+
+<details>
+<summary>Explanation</summary>
+
+Suppose you want to maximize the expression $x - y$ where $x$ and $y$ are elements from the set. To make this as large as possible, you should pick $x$ to be as large as possible (i.e., $\max(S)$) and $y$ to be as small as possible (i.e., $\min(S)$).
+
+</details>
+</details>
 </details>
 
 <details>
-  <summary>Hint 2</summary>
-  <p>What are you left with when you remove range [l, r] from the array?</p>
-  
-  <details>
-    <summary>Answer</summary>
-    <p>You have some <strong>prefix</strong> of the array and some <strong>suffix</strong>.</p>
-  </details>
+<summary>Hint 2</summary>
+
+What are you left with when you remove the subarray $[l, r]$ from the array?
+
+<details>
+<summary>Answer</summary>
+
+You're left with a prefix and a suffix.
+
+<details>
+<summary>Explanation</summary>
+
+Let the universal set be the natural numbers $\mathbb{N}$.
+
+Define two subsets:
+
+- $A = [1, n] \subset \mathbb{N}$ — indices of the array
+- $R = [l, r] \subset A$ — indices to remove
+
+Then the remaining indices are: $A \setminus R = [1, l - 1] \cup [r + 1, n]$
+
+Indices $[1, l - 1]$ form a prefix and $[r + 1, n]$ form a suffix.
+
+</details>
+</details>
 </details>
 
 <details>
-  <summary>Solution</summary>
-  <p>The brute-force approach is too slow. From the hints, you see that after removing <code>[l, r]</code> you only need:</p>
-  <ul>
-    <li>the minimum and maximum of the prefix <code>A[1 … l−1]</code></li>
-    <li>the minimum and maximum of the suffix <code>A[r+1 … n]</code></li>
-  </ul>
-  <p>Precompute four arrays in O(n) time:</p>
-  <ul>
-    <li><code>pref_Min[i]</code> = min of <code>A[1 … i]</code></li>
-    <li><code>pref_Max[i]</code> = max of <code>A[1 … i]</code></li>
-    <li><code>suf_Min[i]</code> = min of <code>A[i … n]</code></li>
-    <li><code>suf_Max[i]</code> = max of <code>A[i … n]</code></li>
-  </ul>
-  <p>Then for any query <code>(l, r)</code>, you can combine the corresponding prefix and suffix minimums and maximums as follows, as <code>U = N, [1, n] - [l, r] = [1, l - 1] U [r + 1, n]</code>, in O(1):</p>
-  <pre><code>minVal   = min(pref_Min[l-1], suf_Min[r+1])
-maxVal   = max(pref_Max[l-1], suf_Max[r+1])
-max_diff = maxVal - minVal
-  </code></pre>
-  And output their difference as your answer.
+<summary>Solution</summary>
+
+After removing the range $[l, r]$, the remaining elements are in indices in: $[1, l - 1] \cup [r + 1, n]$
+
+From this set, you need to find the **maximum absolute difference**, which is: $\max(\text{remaining}) - \min(\text{remaining})$
+
+---
+
+If you use brute-force to find the maximum and minimum for each query, that takes $O(n)$ time per query, and $O(q \times n)$ in total. This is too slow for large $n$ and $q$.
+
+So you need a faster way to find the maximum and minimum in the remaining part of the array.
+
+---
+
+Here's a helpful idea: both $\min$ and $\max$ operations are **associative**:
+
+$\min(a, b, c) = \min(\min(a, b), c)$  
+$\max(a, b, c) = \max(\max(a, b), c)$
+
+This means if you want the minimum value among two ranges, you can compute the minimum in each range separately and then take the minimum of those two results.
+
+Formally,
+$\min(A_{1}, \dots, A_{l - 1}, A_{r + 1}, \dots, A_{n}) = \min(\min(A_{1}, \dots, A_{l - 1}),\ \min(A_{r + 1}, \dots, A_{n}))$  
+And same goes for the maximum.
+
+---
+
+Now you know that you don’t need to traverse the entire remaining range every time. If you somehow **already know** the minimum and maximum in these prefix and suffix parts, you can combine them in constant time.
+
+To make this efficient, precompute the following four arrays in $O(n)$:
+
+- $\text{pref\_min}[i] = \min(A_1, A_2, \dots, A_i)$
+- $\text{pref\_max}[i] = \max(A_1, A_2, \dots, A_i)$
+- $\text{suf\_min}[i] = \min(A_i, A_{i+1}, \dots, A_n)$
+- $\text{suf\_max}[i] = \max(A_i, A_{i+1}, \dots, A_n)$
+
+This preprocessing takes $O(n)$ time and memory.
+
+<details>
+<summary>Explanation</summary>
+
+- $\text{pref\_min}[1] = \text{pref\_max}[1] = A_1$
+- $\text{suf\_min}[n] = \text{suf\_max}[n] = A_n$
+
+For $i > 1$:
+
+- $\text{pref\_min}[i] = \min(\text{pref\_min}[i-1], A_i)$
+- $\text{pref\_max}[i] = \max(\text{pref\_max}[i-1], A_i)$
+
+For $i < n$:
+
+- $\text{suf\_min}[i] = \min(\text{suf\_min}[i+1], A_i)$
+- $\text{suf\_max}[i] = \max(\text{suf\_max}[i+1], A_i)$
+
+</details>
+
+---
+
+Then for any query $(l, r)$, compute the answer in constant time:
+
+```cpp
+min_val = min(pref_min[l - 1], suf_min[r + 1]);
+max_val = max(pref_max[l - 1], suf_max[r + 1]);
+answer = max_val - min_val;
+```
+
+<details>
+<summary>Edge Cases</summary>
+
+- If $l = 1$, then there’s no prefix — use only the suffix.
+- If $r = n$, then there’s no suffix — use only the prefix.
+- If less than two elements are remaining, the answer is $-1$.
+</details>
+
+---
+
+$\text{Time Complexity for preprocessing} = O(n)$
+$\text{Time Complexity for answering each query} = O(1)$
+$\text{Overall Time Complexity} = O(n + q)$
+
 </details>
 
 <details>
