@@ -12,19 +12,30 @@ Tag(s): Greedy
 <details>
 <summary> Hint 1</summary>
 
- What would be the optimal strategy for $k = 1$?
- </details>
-
- <details>
-           
- <summary> Hint 2</summary>
- It is always optimal to apply the Cloning Spell at the same position i every time. Switching between wizards doesn’t improve the result. Why?
+You only need the final total magical potential, not the entire lineup of wizards.
 
 </details>
 
- <details>
+<details>
+<summary> Hint 2</summary>
+
+What would be the optimal strategy for $k = 1$?
+
+</details>
+
+<details>
+           
 <summary> Hint 3</summary>
-Even though a cloned wizard can also cast the spell, casting the spell on a clone is equivalent to casting it on the original wizard (as the effect is identical). Therefore, you only need to consider the positions of original wizards when determining the optimal i.
+
+Only the original wizards' clones survive. Since clones of clones do not survive, it's easier to think of them as not being created in the first place.
+
+</details>
+
+<details>
+<summary> Hint 4</summary>
+
+Even though a cloned wizard can cast the spell, the effect of a clone casting the spell is identical to the first original wizard to his right casting it. So it's easier to not consider clones among candidates who can cast the spell.
+
 </details>
 
 <details>
