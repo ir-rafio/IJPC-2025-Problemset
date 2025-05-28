@@ -45,31 +45,40 @@ Let’s begin by understanding what happens when the **Cloning Spell** is used *
 
 When the _i-th_ wizard casts the spell:
 
-- All _original_ wizards from position $1$ to $i - 1$ are cloned.
-- These clones are inserted immediately before wizard $i$.
+- All _original_ wizards from position `1` to `i - 1` are cloned.
+- These clones are inserted immediately before wizard `i`.
 - The rest shift right accordingly.
-- The cloned segment adds $sum(a[0] \dots a[i - 2])$ to the total magical potential.
+- The cloned segment adds `sum(a[0] ... a[i - 1])` to the total magical potential.
 
-Let’s call this value $prefix[i - 1]$ (the sum of the first $i - 1$ elements).  
-So the **gain** from this spell is $prefix[i - 1]$.
+Now imagine you're allowed to **cast the spell only once**.
 
-Thus, if you’re allowed to cast the spell **once**, the optimal wizard is the one that gives the **maximum** $prefix[i - 1]$.
+To get the **maximum benefit**, you'd want to clone the **largest possible sum** of wizards.  
+This sum is exactly the **prefix sum** of the array up to index `i - 1`, i.e., `prefix[i - 1]`.
 
-Now observe:
+So:
+- Try every position `i` from `1` to `n`, compute `prefix[i - 1]`, and choose the one with the **maximum prefix sum**.
+- This value is the **gain** from one spell.
 
-- Cloned wizards can’t be cloned again.
-- So after the first application, further spells don’t introduce new content — they just clone the same **original** segment again.
-- The cloned block remains identical every time.
+Now what happens when you can cast the spell **up to `k` times**?
 
-This means:
+Here's the key insight:
 
-- The **best wizard to clone once** is also the best wizard to clone multiple times.
-- Each additional spell adds the same fixed value $prefix[i - 1]$.
+- Clones **can’t be cloned** again.
+- So the **first time** you cast the spell, you add a block of original wizards.
+- Every **additional time**, you're just adding that **same block** again (since only originals are cloned).
 
-Therefore, to maximize the total potential:
+Thus:
+- The **gain from each additional spell** is **fixed** once you pick the best wizard `i`.
+- So if you pick the best `i`, you can gain `prefix[i - 1]` from each of the `k` spells.
 
-1. Choose the $i$ that maximizes $prefix[i - 1]$.
-2. Add $k × prefix[i - 1]$ to the original sum of the array.
+
+
+Final Formula:
+
+- Let `sum = sum(a[0] to a[n - 1])`
+- Let `max_net_gain = max(prefix[0] to prefix[n - 1])`
+- Then the answer is:
+      `sum + k × max_net_gain`
 
 <summary>Code</summary>
 
