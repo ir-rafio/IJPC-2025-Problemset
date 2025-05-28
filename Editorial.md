@@ -1108,15 +1108,23 @@ Difficulty: Easy-Medium
 Tags: Range Query
 
 <details>
-<summary>Hint 0</summary>
-  <p>How can you find the maximum absolute difference of 2 elements of any set? The maximum difference can be found by taking the <code>max(S)</code> and <code>min(S)</code> elements from the set.</p>
-  <p><strong>Why?</strong> Because if we had elements <code>x, y</code> with <code>x &lt; y</code>, choosing a smaller <code>x'</code> would only increase <code>y − x'</code>, so the extreme values give the maximum.</p>
-
+  <summary>Hint 1</summary>
+  <p>How can you find the maximum absolute difference of 2 elements of any set?</p>
+  
+  <details>
+    <summary>Answer</summary>
+    <p>The maximum difference can be found by taking the <code>max(S)</code> and <code>min(S)</code> elements from the set.</p>
+  </details>
 </details>
 
 <details>
-  <summary>Hint 1</summary>
-  <p>What are you left with when you remove range [l, r] from the array? You have some <strong>prefix</strong> of the array and some <strong>suffix</strong>.</p>
+  <summary>Hint 2</summary>
+  <p>What are you left with when you remove range [l, r] from the array?</p>
+  
+  <details>
+    <summary>Answer</summary>
+    <p>You have some <strong>prefix</strong> of the array and some <strong>suffix</strong>.</p>
+  </details>
 </details>
 
 <details>
@@ -1133,7 +1141,7 @@ Tags: Range Query
     <li><code>suf_Min[i]</code> = min of <code>A[i … n]</code></li>
     <li><code>suf_Max[i]</code> = max of <code>A[i … n]</code></li>
   </ul>
-  <p>Then for any query <code>(l, r)</code>, you can combine the corresponding prefix and suffix minimums and maximums as follows, in O(1):</p>
+  <p>Then for any query <code>(l, r)</code>, you can combine the corresponding prefix and suffix minimums and maximums as follows, as <code>U = N, [1, n] - [l, r] = [1, l - 1] U [r + 1, n]</code>, in O(1):</p>
   <pre><code>minVal   = min(pref_Min[l-1], suf_Min[r+1])
 maxVal   = max(pref_Max[l-1], suf_Max[r+1])
 max_diff = maxVal - minVal
