@@ -56,6 +56,7 @@ To get the **maximum benefit**, you'd want to clone the **largest possible sum**
 This sum is exactly the **prefix sum** of the array up to index `i - 1`, i.e., `prefix[i - 1]`.
 
 So:
+
 - Try every position `i` from `1` to `n`, compute `prefix[i - 1]`, and choose the one with the **maximum prefix sum**.
 - This value is the **gain** from one spell.
 
@@ -68,17 +69,16 @@ Here's the key insight:
 - Every **additional time**, you're just adding that **same block** again (since only originals are cloned).
 
 Thus:
+
 - The **gain from each additional spell** is **fixed** once you pick the best wizard `i`.
 - So if you pick the best `i`, you can gain `prefix[i - 1]` from each of the `k` spells.
-
-
 
 Final Formula:
 
 - Let `sum = sum(a[0] to a[n - 1])`
 - Let `max_net_gain = max(prefix[0] to prefix[n - 1])`
 - Then the answer is:
-      `sum + k × max_net_gain`
+  `sum + k × max_net_gain`
 
 <summary>Code</summary>
 
@@ -847,6 +847,15 @@ This method gives you the answer directly. Alternatively, you could design a fun
 3. Visit all delta-positive houses first, then all delta-negative houses.
 4. Simulate the journey and find the minimum required loan.
 
+---
+
+$\text{Time Complexity for sorting} = O(n \log(n))$  
+$\text{Time Complexity for calculating loan directly} = O(n)$  
+$\text{Overall Time Complexity} = O(n \log(n) + n) = O(n \log(n))$
+
+With the binary search approach, the time complexity of the checking function is $O(n)$. The function needs to be called $O(\log(m))$ times where $m$ is the maximum possible loan. For the given constraints, it would be $2 \times 10^{14}$.  
+$\text{Overall Time Complexity} = O(n \log(n) + n \log(m)) = O(n \log(m))$
+
 <details>
 <summary>Proof</summary>
 
@@ -1355,6 +1364,9 @@ Now,
 Vector $\vec{CP} = P - C = (x, y) - (0, l) = (x, y - l)$  
 So, reflected vector $\vec{CP'} = -\vec{CP} = (-x, l - y)$  
 So, the reflection point $P' = C + \vec{CP'} = (-x, 2l - y)$
+
+$\text{Time Complexity for each move} = O(1)$  
+$\therefore \text{Time Complexity} = \text{Number of moves} = O(\dfrac{\text{Area of hexagon}}{\text{Area of circle}}) = O(\dfrac{l^2}{r^2})$
 
 <details>
 <summary>Proof</summary>
