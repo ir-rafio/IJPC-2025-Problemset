@@ -5,7 +5,7 @@
 
 Problem Setter: [Jannatul Fardus Rakhi](https://codeforces.com/profile/sectumsemprra)
 
-Difficulty: Medium
+Difficulty: Medium-Hard
 
 Tag(s): Greedy
 
@@ -19,20 +19,27 @@ You only need the final total magical potential, not the entire lineup of wizard
 <details>
 <summary> Hint 2</summary>
 
+Focus on the effect of the spell, not the entire cloning process.
+
+</details>
+
+<details>
+<summary> Hint 3</summary>
+
 What would be the optimal strategy for $k = 1$?
 
 </details>
 
 <details>
            
-<summary> Hint 3</summary>
+<summary> Hint 4</summary>
 
 Only the original wizards' clones survive. Since clones of clones do not survive, it's easier to think of them as not being created in the first place.
 
 </details>
 
 <details>
-<summary> Hint 4</summary>
+<summary> Hint 5</summary>
 
 Even though a cloned wizard can cast the spell, the effect of a clone casting the spell is identical to the first original wizard to his right casting it. So it's easier to not consider clones among candidates who can cast the spell.
 
@@ -45,51 +52,55 @@ Let's begin by understanding what happens when the **Cloning Spell** is used **o
 
 When the _i-th_ wizard casts the spell:
 
-- The **first time** you cast the spell, you add a **_block_** (prefix) of original wizards.
 - All _original_ wizards from position $1$ to $i - 1$ are cloned.
 - These clones are inserted immediately before wizard $i$.
 - The rest shift right accordingly.
-- The cloned segment adds $sum(a[1] ... a[i - 1])$ to the total magical potential.
+- The overall effect of the spell is that a **segment** (prefix) of original wizards are added to the lineup.
+- The cloned segment adds $sum(a_1, \dots, a_{i - 1})$ to the total magical potential. This is exactly the **prefix sum** of the array up to index $(i - 1)$, i.e., $prefixSum[i - 1]$.
 
-Now imagine you're allowed to **cast the spell only once**.
+---
 
-To get the **maximum benefit**, you'd want to clone the **largest possible sum** of wizards.  
-This sum is exactly the **prefix sum** of the array up to index $i - 1$, i.e., $prefix[i - 1]$.
+Imagine you're allowed to **cast the spell only once**. To get the **maximum benefit**, you'd want to clone the segment of wizards with the **largest possible prefix sum**.
 
 So:
 
-- Try every position $i$ from $1$ to $n$, compute $prefix[i - 1]$, and choose the one with the **maximum prefix sum**.
-- This value is the **gain** from one spell.
+- Consider $prefixSum[0] = 0$.
+- For every $i$ from $1$ to $n$, compute $prefixSum[i] = \sum_{j=1}^{i} (a_j) = prefixSum[i - 1] + a_i$.
+- Try every $i$ from $1$ to $n$, and choose the maximum value $prefixSum[i - 1]$.
+- This value is the **gain** from one spell. Add it to $prefixSum[n]$ to get the final magical potential.
+- Notice that you cannot get $prefixSum[n]$ as gain because nobody can make a clone of the last wizard.
+
+---
 
 Now what happens when you can cast the spell **up to $k$ times**?
 
 Here's the key insight:
 
 - Clones **can't be cloned** again.
-- Whenever a spell is cast, the new wizards added to the lineup will always be a **_block_** (prefix) of the original wizard lineup.
+- Whenever a spell is cast, the new wizards added to the lineup (that survive) will always be a **segment** (prefix) of the original wizard lineup.
 
 Thus:
 
 - The **gain from each additional spell** is **fixed** once you pick the best wizard $i$.
-- So if you pick the best $i$, you can gain $prefix[i - 1]$ from each of the $k$ spells.
+- So if you pick the best $i$, you can gain $prefixSum[i - 1]$ from each of the $k$ spells.
+
+---
 
 Final Formula:
 
 - Let
-  $$\textit{initialSum} = \sum_{i = 1}^{n } a[i]$$
+  $\textit{initialSum} = \sum_{i = 1}^{n } a[i]$
 
 - Let
-  $$\textit{maxPrefixSum} = \max(\textit{prefixSum}[1], \textit{prefixSum}[2], \dots, \textit{prefixSum}[n - 1])$$
+  $\boxed{\textit{maxPrefixSum} = \max(\textit{prefixSum}[0], \textit{prefixSum}[1], \dots, \textit{prefixSum}[n - 1])}$
 
 Then, the total magical potential after applying the cloning spell up to $k$ times is given by:
 
-<div align="center">
+$\large\boldsymbol{\textit{answer} = \textit{initialSum} + k \times \textit{maxPrefixSum}}$
 
-$$\large\boldsymbol{\textit{answer} = \textit{initialSum} + k \times \textit{maxPrefixSum}}$$
+Time Complexity = $O(n)$
 
-</div>
-
-**P.S. : The witches won the fight because all wizards must die .**
+**P.S.: The witches won the fight because all wizards must die.**
 
 # Code
 
@@ -125,7 +136,7 @@ int main() {
        }
 
        ll maxPrefixSum = 0;
-       for (ll i = 1; i < n; i++) {
+       for (ll i = 1; i <= n - 1; i++) {
            maxPrefixSum = max(maxPrefixSum, prefixSum[i]);
        }
 
@@ -135,8 +146,6 @@ int main() {
 
    return 0;
 }
-
-
 ```
 
 </details>
