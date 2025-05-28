@@ -382,6 +382,7 @@ Our objective is to determine the size of the receptive field at the input layer
 If we carefully examine the illustration given in the problem statement, we can observe a hierarchical or _"pyramidal"_ relationship between the receptive field sizes of successive layers. Specifically, each layer’s receptive field is built upon the receptive field of the previous layer, expanding outward as we move closer to the input. This pattern can be leveraged to express the receptive field at any layer in terms of the layers above it, ultimately leading us to a general formula for $r_0$.
 
 To make the problem even more approachable, let's visualize our neural network as a sequence of 1-dimensional convolutional layers. This simplification is valid because convolutional kernels are usually symmetric across their dimensions. Even in cases with asymmetric kernels, the same reasoning can be applied independently to each dimension. With that in mind, let’s consider a straightforward 1D convolutional neural network:
+
 ![1dConv](images/1D_conv_example_whitebg.png)
 
 Each layer’s receptive field builds on the previous layer, expanding outward. If we consider the receptive field size at layer $i$ as $r_i$, then we can express:  
@@ -389,11 +390,11 @@ $r_{i-1} = (k_i - 1) + r_i$
 
 Since the output layer has a receptive field of $r_n = 1$, we can work backwards:
 
-- $r_{n-1} = r_n + (k_n - 1) = 1 + (k_n - 1) = k_n$
-- $r_{n-2} = r_{n-1} + (k_{n-1} - 1) = k_n + k_{n-1} - 1$
-- $r_{n-3} = r_{n-2} + (k_{n-2} - 1) = k_n + k_{n-1} + k_{n-2} - 2$
-- $\dots$
-- $r_0 = \sum_{i=1}^n k_i - (n - 1) = \sum_{i=1}^n k_i - n + 1$
+$r_{n-1} = r_n + (k_n - 1) = 1 + (k_n - 1) = k_n$\
+$r_{n-2} = r_{n-1} + (k_{n-1} - 1) = k_n + k_{n-1} - 1$\
+$r_{n-3} = r_{n-2} + (k_{n-2} - 1) = k_n + k_{n-1} + k_{n-2} - 2$\
+$\vdots$\
+$r_0 = \sum_{i=1}^n k_i - (n - 1) = \sum_{i=1}^n k_i - n + 1$
 
 Thus, we obtain $r_0$, which is the receptive field at Layer 0.
 
