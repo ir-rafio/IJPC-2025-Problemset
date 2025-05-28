@@ -1105,64 +1105,41 @@ Problem Setter: [Mahiul Kabir](https://codeforces.com/profile/the-NerdNinja)
 
 Difficulty: Easy-Medium
 
-Tag(s): Range Query, Data Structures
+Tags: Range Query
 
 <details>
-<summary>Hint 1</summary>
-
-How can you find the maximum absolute difference of two elements in a set?
-
-<details>
-<summary>Answer</summary>
-
-The maximum difference can be found by taking the maximum and the minimum elements from the set.
-Why? because if the elements were x, y; where x < y, taking a smaller element x' will always improve the result.
-
-</details>
-</details>
-
-<details>
-<summary>Hint 2</summary>
-
-What are we left with when we remove range [l, r] form the array?
-
-<details>
-<summary>Answer</summary>
-
-We have some prefix of the array, and some suffix.
-
-</details>
-</details>
-
-<details>
-<summary>Hint 3</summary>
-
-How can you find the maximum absolute difference of two elements in the union of two sets?
-
-<details>
-<summary>Answer</summary>
-
-The maximum difference can be found by taking the maximum and the minimum elements from the set.
-Why? because if the elements were x, y; where x < y, taking a smaller element x' will always improve the result.
-
-</details>
+<summary>Hint 0</summary>
+  <p>How can you find the maximum absolute difference of 2 elements of any set? The maximum difference can be found by taking the <code>max(S)</code> and <code>min(S)</code> elements from the set.</p>
+  <p><strong>Why?</strong> Because if we had elements <code>x, y</code> with <code>x &lt; y</code>, choosing a smaller <code>x'</code> would only increase <code>y − x'</code>, so the extreme values give the maximum.</p>
 
 </details>
 
 <details>
-<summary>Solution</summary>
+  <summary>Hint 1</summary>
+  <p>What are you left with when you remove range [l, r] from the array? You have some <strong>prefix</strong> of the array and some <strong>suffix</strong>.</p>
+</details>
 
-Obviously, the brute force approach is too slow to pass the time limit.
-
-From the Hints, we deduce that we need to find the maximum and the minimum elements of prefix $[A_1 \dots A_{l - 1}]$, and suffix $[A_{r + 1}, A_n]$. This can be done with the classic trick: **_prefix arrays_**.
-We precompute 4 arrays,
-
-- prefix min array
-- prefix max array
-- suffix min array
-- suffix max array
-
-and combine the results accordingly.
+<details>
+  <summary>Solution</summary>
+  <p>The brute-force approach is too slow. From the hints, you see that after removing <code>[l, r]</code> you only need:</p>
+  <ul>
+    <li>the minimum and maximum of the prefix <code>A[1 … l−1]</code></li>
+    <li>the minimum and maximum of the suffix <code>A[r+1 … n]</code></li>
+  </ul>
+  <p>Precompute four arrays in O(n) time:</p>
+  <ul>
+    <li><code>pref_Min[i]</code> = min of <code>A[1 … i]</code></li>
+    <li><code>pref_Max[i]</code> = max of <code>A[1 … i]</code></li>
+    <li><code>suf_Min[i]</code> = min of <code>A[i … n]</code></li>
+    <li><code>suf_Max[i]</code> = max of <code>A[i … n]</code></li>
+  </ul>
+  <p>Then for any query <code>(l, r)</code>, you can combine the corresponding prefix and suffix minimums and maximums as follows, in O(1):</p>
+  <pre><code>minVal   = min(pref_Min[l-1], suf_Min[r+1])
+maxVal   = max(pref_Max[l-1], suf_Max[r+1])
+max_diff = maxVal - minVal
+  </code></pre>
+  And output their difference as your answer.
+</details>
 
 <details>
 <summary>Code</summary>
