@@ -26,7 +26,7 @@ When the _i-th_ wizard casts the spell:
 - All _original_ wizards from position $1$ to $i - 1$ are cloned.
 - These clones are inserted immediately before wizard $i$.
 - The rest shift right accordingly.
-- The cloned segment adds $sum(a[0] to a[i - 2])$ to the total magical potential.
+- The cloned segment adds $sum(a[0] \dots a[i - 2])$ to the total magical potential.
 
 Let’s call this value $prefix[i - 1]$ (the sum of the first $i - 1$ elements).  
 So the **gain** from this spell is $prefix[i - 1]$.
@@ -119,6 +119,11 @@ This problem has no input.
 
 You can implement the decryption algorithm. But since the answer is fixed, it is easier to decrypt it by yourself using a pen and paper. Then, simply print the decrypted string.
 
+---
+
+Let's go through this _tough_ problem step-by-step. The encrypted string that you are given is `"NILE LE A BAMVOOG"`. Keeping the spaces and vowels in their original positions, and masking out the consonants yields a skeleton of the form `_I_E _E A _A__OO_`.  
+Here, the original sequence of the filtered consonants is `[N, L, L, B, M, V, G]`, which upon being reversed, as per the encryption scheme, becomes `[G, V, M, B, L, L, N]`. Now, fill in the blank boxes of the skeleton string with the consonants in the order that they appear in the inverted sequence, and—voilà!—you obtain the answer `"GIVE ME A BALLOON"`.
+
 <details>
 <summary>Code</summary>
 
@@ -133,11 +138,6 @@ int main()
 ```
 
 </details>
-</details>
-<details>
-<summary>Alternate Solution</summary>
-
-Let's go through this _tough_ problem step-by-step. The encrypted string that you are given is `"NILE LE A BAMVOOG"`. Keeping the spaces and vowels in their original positions, and masking out the consonants yields a skeleton of the form `⬚I⬚E ⬚E A ⬚A⬚⬚OO⬚`. Here, the original sequence of the filtered consonants is `[N, L, L, B, M, V, G]`, which upon being inverted, as per the encryption scheme, becomes `[G, V, M, B, L, L, N]`. Now, fill in the blank boxes of the skeleton string with the consonants in the order that they appear in the inverted sequence, and—voilà!—you obtain the answer `"GIVE ME A BALLOON"`.
 
 <details>
 <summary>Code</summary>
@@ -161,30 +161,41 @@ void pre()
 
 void solve(int tc)
 {
-    string s = "NILE LE A BAMVOOG";
-    string consonants, result;
-    int i, n = s.size();
+    string str = "NILE LE A BAMVOOG";
+    string consonants;
+
+    int i, j, n = str.size();
     char ch;
 
     for(i = 0; i < n; i++)
     {
-        ch = s[i];
-        if(!isVowel(ch) && ch != ' ') consonants += ch;
-    }
+        ch = str[i];
 
-    for(i = 0; i < n; i++)
-    {
-        ch = s[i];
-        if(ch == ' ') result += ' ';
-        else if(isVowel(ch)) result += ch;
-        else
+        if(!isVowel(ch) && ch != ' ')
         {
-            result += consonants.back();
-            consonants.pop_back();
+            str[i] = '_';
+            consonants += ch;
         }
     }
 
-    cout << result;
+    reverse(consonants.begin(), consonants.end());
+
+    // Check out the masked string and reversed consonants
+    // cout << str << '\n' << consonants << '\n';
+
+    j = 0;
+    for(i = 0; i < n; i++)
+    {
+        ch = str[i];
+
+        if(ch == '_')
+        {
+            str[i] = consonants[j];
+            ++j;
+        }
+    }
+
+    cout << str;
 }
 
 signed main()
@@ -1045,7 +1056,7 @@ Problem Setter: [Mahiul Kabir](https://codeforces.com/profile/the-NerdNinja)
 
 Difficulty: Easy-Medium
 
-Tag(s): Range Query
+Tag(s): Range Query, Data Structures
 
 <details>
 <summary>Hint 1</summary>
@@ -1094,7 +1105,7 @@ Why? because if the elements were x, y; where x < y, taking a smaller element x'
 
 Obviously, the brute force approach is too slow to pass the time limit.
 
-From the Hints, we deduce that we need to find the maximum and the minimum elements of prefix[$A_1$ to $A_{l-1}$], and suffix[$A_{r+1}$, $A_n$]. This can be done with the classic trick: **_prefix arrays_**.
+From the Hints, we deduce that we need to find the maximum and the minimum elements of prefix $[A_1 \dots A_{l - 1}]$, and suffix $[A_{r + 1}, A_n]$. This can be done with the classic trick: **_prefix arrays_**.
 We precompute 4 arrays,
 
 - prefix min array
