@@ -1186,28 +1186,28 @@ Now you know that you don’t need to traverse the entire remaining range every 
 
 To make this efficient, precompute the following four arrays in $O(n)$:
 
-- $\text{pref\_min}[i] = \min(A_1, A_2, \dots, A_i)$
-- $\text{pref\_max}[i] = \max(A_1, A_2, \dots, A_i)$
-- $\text{suf\_min}[i] = \min(A_i, A_{i+1}, \dots, A_n)$
-- $\text{suf\_max}[i] = \max(A_i, A_{i+1}, \dots, A_n)$
+- $\text{prefMin}[i] = \min(A_1, A_2, \dots, A_i)$
+- $\text{prefMax}[i] = \max(A_1, A_2, \dots, A_i)$
+- $\text{suffMin}[i] = \min(A_i, A_{i+1}, \dots, A_n)$
+- $\text{suffMax}[i] = \max(A_i, A_{i+1}, \dots, A_n)$
 
 This preprocessing takes $O(n)$ time and memory.
 
 <details>
 <summary>Explanation</summary>
 
-- $\text{pref\_min}[1] = \text{pref\_max}[1] = A_1$
-- $\text{suf\_min}[n] = \text{suf\_max}[n] = A_n$
+- $\text{prefMin}[1] = \text{prefMax}[1] = A_1$
+- $\text{suffMin}[n] = \text{suffMax}[n] = A_n$
 
 For $i > 1$:
 
-- $\text{pref\_min}[i] = \min(\text{pref\_min}[i-1], A_i)$
-- $\text{pref\_max}[i] = \max(\text{pref\_max}[i-1], A_i)$
+- $\text{prefMin}[i] = \min(\text{prefMin}[i-1], A_i)$
+- $\text{prefMax}[i] = \max(\text{prefMax}[i-1], A_i)$
 
 For $i < n$:
 
-- $\text{suf\_min}[i] = \min(\text{suf\_min}[i+1], A_i)$
-- $\text{suf\_max}[i] = \max(\text{suf\_max}[i+1], A_i)$
+- $\text{suffMin}[i] = \min(\text{suffMin}[i+1], A_i)$
+- $\text{suffMax}[i] = \max(\text{suffMax}[i+1], A_i)$
 
 </details>
 
