@@ -276,12 +276,17 @@ Can you find a pattern or a recurrence relationship?
 <details>
 <summary>Solution</summary>
 
-To determine the receptive field size, consider the kernel as a square grid of side length $k_i$. When a kernel slides over an image, the pixel at the top-right of the kernel is $(k_i - 1)$ pixels to the right of the pixel at the top-left. So the **length** of the receptive field increases by $(k_i - 1)$ at each layer.
+The **Manhattan distance** between two points $(x_1, y_1)$ and $(x_2, y_2)$ is defined as $|x_1 - x_2| + |y_1 - y_2|$.
 
-If the network has $n$ layers with kernel sizes $k_1, k_2, \dots, k_n$, the total distance from the top-left to the top-right corner of the receptive field is $\sum_{i=1}^{n}(k_i - 1)$.
+For a square kernel of size $k_i \times k_i$, the top-left and bottom-right corners are $(0, 0)$ and $(k_i - 1, k_i - 1)$, so the Manhattan distance between them is $2(k_i - 1)$. This is how far apart two corners of the receptive field become after one layer.
 
-Since the field is square and includes the initial pixel, we must add $1$ to get the final side length:  
-$\text{Receptive Field Length} = \sum_{i=1}^{n}(k_i - 1) + 1$
+If you apply $n$ layers with kernel sizes $k_1, k_2, \dots, k_n$, the total Manhattan distance from the top-left to bottom-right of the receptive field is $\sum_{i=1}^{n} 2(k_i - 1)$.
+
+Now, suppose the final receptive field is a square of side length $L$. Its top-left and bottom-right corners are $(0, 0)$ and $(L - 1, L - 1)$, so their Manhattan distance is $2(L - 1)$.
+
+Equating this with the total distance, we get $2(L - 1) = \sum_{i=1}^{n} 2(k_i - 1)$. Solving this equation gives: $\boxed{L = \sum_{i=1}^{n}(k_i - 1) + 1}$
+
+This is the side length of the final receptive field.
 
 <details>
 <summary>Code</summary>
@@ -353,8 +358,12 @@ Think in 1D instead of 2D for easy understanding.
 
 Our objective is to determine the size of the receptive field at the input layer (denoted as $r_0$). How should we approach this?
 
-Each layer’s receptive field builds on the previous layer, expanding outward. If we consider the receptive field size at layer $i$ as $r_i$, then we can express:
+If we carefully examine the illustration given in the problem statement, we can observe a hierarchical or _"pyramidal"_ relationship between the receptive field sizes of successive layers. Specifically, each layer’s receptive field is built upon the receptive field of the previous layer, expanding outward as we move closer to the input. This pattern can be leveraged to express the receptive field at any layer in terms of the layers above it, ultimately leading us to a general formula for $r_0$.
 
+To make the problem even more approachable, let's visualize our neural network as a sequence of 1-dimensional convolutional layers. This simplification is valid because convolutional kernels are usually symmetric across their dimensions. Even in cases with asymmetric kernels, the same reasoning can be applied independently to each dimension. With that in mind, let’s consider a straightforward 1D convolutional neural network:
+![1dConv](images/1D_conv_example_whitebg.png)
+
+Each layer’s receptive field builds on the previous layer, expanding outward. If we consider the receptive field size at layer $i$ as $r_i$, then we can express:  
 $r_{i-1} = (k_i - 1) + r_i$
 
 Since the output layer has a receptive field of $r_n = 1$, we can work backwards:
@@ -832,11 +841,11 @@ This method gives you the answer directly. Alternatively, you could design a fun
 <details>
 <summary>Proof</summary>
 
-The correctness of the strategy can be proven in three steps.
+The correctness of the strategy can be proven by proving three claims.
 
 ---
 
-Before proving any of the steps, let's establish the premise of the argument.
+Before proving any of the claims, let's establish the premise of the argument.
 
 Suppose there are two houses:
 
@@ -857,7 +866,7 @@ Minimum balance: $\min(x - g_2, x + \delta_2 - g_1)$
 
 ---
 
-_Step 1: Delta-positive houses must be visited before delta-negative houses._
+_Claim 1: Delta-positive houses must be visited before delta-negative houses._
 
 Assume $\delta_1 > 0$ and $\delta_2 < 0$.
 
@@ -870,20 +879,20 @@ Clearly, both terms in Option 1 have a smaller counterparts in Option 2. Hence, 
 
 ---
 
-_Step 2: Among delta-positive houses, those with smaller $g$ must be visited earlier._
+_Claim 2: Among delta-positive houses, those with smaller $g_i$ must be visited earlier._
 
-Assume both $\delta_1, \delta_2 > 0$ and $g_1 > g_2$.
+Assume both $\delta_1, \delta_2 > 0$ and $g_1 < g_2$.
 
 Now,
 
-- $x - g_1 < x - g_2$ $[\because g_1 > g_2]$,
-- $x - g_1 < x + d_2 - g_1$ $[\because \delta_2 > 0]$
+- $x - g_2 < x - g_1$ $[\because g_1 < g_2]$,
+- $x - g_2 < x + d_1 - g_2$ $[\because \delta_1 > 0]$
 
-Both terms in Option 2 have a smaller counterpart in Option 1. So, the minimum balance in Option 1 is smaller. Therefore, Option 2 is better.
+Both terms in Option 1 have a smaller counterpart in Option 2. So, the minimum balance in Option 2 is smaller. Therefore, Option 1 is better.
 
 ---
 
-_Step 3: Among delta-negative houses, those with larger $r$ must be visited earlier._
+_Claim 3: Among delta-negative houses, those with larger $r_i$ must be visited earlier._
 
 Assume both $\delta_1, \delta_2 < 0$ and $r_1 > r_2$.
 
