@@ -1231,8 +1231,8 @@ answer = max_val - min_val;
 
 ---
 
-$\text{Time Complexity for preprocessing} = O(n)$
-$\text{Time Complexity for answering each query} = O(1)$
+$\text{Time Complexity for preprocessing} = O(n)$  
+$\text{Time Complexity for answering each query} = O(1)$  
 $\text{Overall Time Complexity} = O(n + q)$
 
 </details>
