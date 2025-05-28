@@ -1326,7 +1326,13 @@ Construct four simultaeneous equations and find the four unknown values.
 <details>
 <summary>Solution</summary>
 
-Let's denote the actual influence values of Shabab, Hamim, Rafi, and Abdullah with $A$, $B$, $C$, and $D$ respectively. Therefore, the given inputs can be written as:
+Let's denote the actual influence values as:  
+$A = \text{Shabab's influence}$  
+$B = \text{Hamim's influence}$  
+$C = \text{Rafi's influence}$  
+$D = \text{Abdullah's influence}$
+
+The given inputs can be written as:
 
 $a = \dfrac{B+C+D}{3} \Rightarrow 3a = B + C + D$
 
@@ -1338,17 +1344,18 @@ $d = \dfrac{A+B+C}{3} \Rightarrow 3d = A + B + C$
 
 Summing these equations yields the following relationship:  
 $3a + 3b + 3c + 3d = 3A + 3B + 3C + 3D$  
-$\Rightarrow 3(a + b + c + d) = 3(A + B + C + D)$  
+$\Rightarrow 3 \cdot (a + b + c + d) = 3 \cdot (A + B + C + D)$  
 $\Rightarrow a + b + c + d = A + B + C + D$
 
-Now, let's denote the aggregate influence of all 4 lords using $s = A + B + C + D$, which also means $s = a + b + c + d$. The aforementioned set of 4 equations can then be rewritten as:
+Let $s = A + B + C + D = a + b + c + d$
 
+Now:  
 $3a = s - A \Rightarrow A = s - 3a$  
 $3b = s - B \Rightarrow B = s - 3b$  
 $3c = s - C \Rightarrow C = s - 3c$  
 $3d = s - D \Rightarrow D = s - 3d$
 
-Consequently, we end up inferring the clouts $A$, $B$, $C$, and $D$ of all 4 lords Shabab, Hamim, Rafi, and Abdullah respectively.
+This gives you the true influence of each lord. Since this is a direct equation, the time complexity is $O(1)$.
 
 <details>
 <summary>Code</summary>
