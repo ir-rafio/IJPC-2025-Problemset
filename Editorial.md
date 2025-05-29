@@ -51,11 +51,11 @@ Let's begin by understanding what happens when the **Cloning Spell** is used **o
 
 When the _i-th_ wizard casts the spell:
 
-- All _original_ wizards from position $1$ to $i - 1$ are cloned.
+- All _original_ wizards from position $1$ to $(i - 1)$ are cloned.
 - These clones are inserted immediately before wizard $i$.
 - The rest shift right accordingly.
-- The overall effect of the spell is that a **segment** (prefix) of original wizards are added to the lineup.
-- The cloned segment adds $\displaystyle\sum_{j=1}^{i-1} A_j$ to the total magical potential. This is exactly the **prefix sum** of the array up to index $(i - 1)$, i.e., $\text{ps}[i - 1]$.
+- The overall effect of the spell is that a **segment** (prefix) of original wizards are cloned and added to the lineup.
+- The cloned segment adds $(a_1 + \dots + a_{i - 1})$ to the total magical potential. This is exactly the **prefix sum** of the array up to index $(i - 1)$, i.e., $prefixSum[i - 1]$.
 
 ---
 
@@ -63,18 +63,11 @@ Imagine you're allowed to **cast the spell only once**. To get the **maximum ben
 
 So:
 
-- Define
-  \[
-    \text{ps}[0] = 0, \quad
-    \text{ps}[i] = \sum_{j=1}^{i} A_j \quad\text{for }1 \le i \le n.
-  \]
-- The **gain** from one spell is $\max_{0 \le i \le n-1} \text{ps}[i]$.
-- The **initial sum** is
-  \[
-    \text{initialSum}
-    = \sum_{i=1}^n A_i
-    = \text{ps}[n].
-  \]
+- Consider $prefixSum[0] = 0$.
+- For every $i$ from $1$ to $n$, compute $prefixSum[i] = \sum_{j=1}^{i} (a_j) = prefixSum[i - 1] + a_i$.
+- Try every $i$ from $1$ to $n$, and choose the maximum value $prefixSum[i - 1]$.
+- This value is the **gain** from one spell. Add it to $prefixSum[n]$ to get the final magical potential.
+- Notice that you cannot get $prefixSum[n]$ as gain because nobody can make a clone of the last wizard.
 
 ---
 
@@ -83,30 +76,26 @@ Now what happens when you can cast the spell **up to $k$ times**?
 Here's the key insight:
 
 - Clones **can't be cloned** again.
-- Whenever a spell is cast, the new wizards added to the lineup (that survive) will always be a **segment** (prefix) of the original wizard lineup.
+- Whenever a spell is cast, the new wizards added to the lineup (and survive) will always be a **segment** (prefix) of the original wizard lineup.
+
+Thus:
+
 - The **gain from each additional spell** is **fixed** once you pick the best wizard $i$.
-- So if you pick the best $i$, you can gain $\max_{0 \le j \le n-1}\text{ps}[j]$ from each of the $k$ spells.
+- So if you pick the best $i$, you can gain $prefixSum[i - 1]$ from each of the $k$ spells.
 
 ---
 
-**Final Formula:**
+Final Formula:
 
-Let
-\[
-\text{initialSum} = \sum_{i=1}^n A_i = \text{ps}[n],
-\quad
-\text{maxPrefixSum} = \max_{0 \le i \le n-1}\text{ps}[i].
-\]
+- Let
+  $\text{initialSum} = \sum_{i = 1}^{n } (a_i) = prefixSum[n]$
+
+- Let
+  $\text{maxPrefixSum} = \max(\text{prefixSum}[0], \text{prefixSum}[1], \dots, \text{prefixSum}[n - 1])$
 
 Then, the total magical potential after applying the cloning spell up to $k$ times is given by:
 
-\[
-\boxed{
-\displaystyle
-\text{answer}
-= \text{initialSum} + k \times \text{maxPrefixSum}
-}
-\]
+$\large\text{answer} = \text{initialSum} + k \times \text{maxPrefixSum}$
 
 Time Complexity = $O(n)$
 
@@ -139,18 +128,19 @@ int main() {
        }
 
        vector<ll> prefixSum(n+1);
-       prefixSum[0] = 0;
+       prefixSum[1] = wizards[1];
+
        for (ll i = 1; i <= n; i++) {
            prefixSum[i] = prefixSum[i - 1] + wizards[i];
        }
 
        ll maxPrefixSum = 0;
-       for (ll i = 0; i <= n - 1; i++) {
+       for (ll i = 1; i <= n - 1; i++) {
            maxPrefixSum = max(maxPrefixSum, prefixSum[i]);
        }
 
        ll answer = initialSum + k * maxPrefixSum;
-       cout << answer << "\n";
+       cout << answer << endl;
    }
 
    return 0;
@@ -471,7 +461,7 @@ Read the input constraints carefully.
 <details>
 <summary>Hint 2</summary>
 
-Have you heard of **brute force**? What will the time complexity of brute force approach here considering all queries and total word length? 
+Have you heard of **brute force**? What will the time complexity of brute force approach here considering all queries and total word length?
 
 </details>
 
@@ -488,18 +478,18 @@ For each name:
 - For each direction from the 8 possible directions, try to match each character in the string.
 - If the full string matches without going out of bounds, count it.
 
-While the algorithm is simple, the code can become very large unless written in a clean way. The implementation can be made much cleaner and more manageable by using **functions**. Repeating the same block of code in multiple places is bad practice. Function improves readability, reduces the chance of errors, and makes debugging and testing easier. 
+While the algorithm is simple, the code can become very large unless written in a clean way. The implementation can be made much cleaner and more manageable by using **functions**. Repeating the same block of code in multiple places is bad practice. Function improves readability, reduces the chance of errors, and makes debugging and testing easier.
 
-__Overall Time Complexity :__ $O(q × n × m × w)$
+**Overall Time Complexity :** $O(q × n × m × w)$
 
 **Parameter Definitions**
 
-| Parameter | Description |
-|-----------|-------------|
-| $q$ | Number of queries |
-| $n$ | Number of rows in the grid |
-| $m$ | Number of columns in the grid |
-| $w$ | Sum of characters to be queried |
+| Parameter | Description                     |
+| --------- | ------------------------------- |
+| $q$       | Number of queries               |
+| $n$       | Number of rows in the grid      |
+| $m$       | Number of columns in the grid   |
+| $w$       | Sum of characters to be queried |
 
 <details>
 <summary>Code</summary>
@@ -767,15 +757,15 @@ int main()
 <details>
 <summary>Alternate Solution 2</summary>
            
-Let's consider a situation where soldier names to be queried are: "L", "Leo", "Leon", "Leonardo"! Notice that "L", "Leo", "Leon" are all prefixes of "Leonardo", thus forming a progressive sequence. In a naive brute-force approach, all common characters in a progressive sequence (such as the earlier case) are overcounted. Iterating over the characters in "Leonardo" is enough. To counter this situation, among many other approaches, one simpler solution is to store the words in a dictionary-like structure using a data structure called a "Prefix Tree" or "Trie". 
+Let's consider a situation where soldier names to be queried are: "L", "Leo", "Leon", "Leonardo"! Notice that "L", "Leo", "Leon" are all prefixes of "Leonardo", thus forming a progressive sequence. In a naive brute-force approach, all common characters in a progressive sequence (such as the earlier case) are overcounted. Iterating over the characters in "Leonardo" is enough. To counter this situation, among many other approaches, one simpler solution is to store the words in a dictionary-like structure using a data structure called a "Prefix Tree" or "Trie".
 
 The key idea is to iterate only over the longer word (Leonardo) and mark the end positions of other words (L at index 0, Leo at index 2, Leon at index 3). Then, one iteration over the characters in the longer word is sufficient—prefixes are searched on the fly!
 
-This will reduce the worst case time complexity in a significant way 
+This will reduce the worst case time complexity in a significant way
 
-From  $O(q * n * m * w)$ to $O(n * m * maxWordLength + s * avgWordLength)$ using __Trie__
+From $O(q * n * m * w)$ to $O(n * m * maxWordLength + s * avgWordLength)$ using **Trie**
 
-[Go through this tutorial on Trie if you are interested](https://www.geeksforgeeks.org/introduction-to-trie-data-structure-and-algorithm-tutorials/) (Highly encouraged) 
+[Go through this tutorial on Trie if you are interested](https://www.geeksforgeeks.org/introduction-to-trie-data-structure-and-algorithm-tutorials/) (Highly encouraged)
 
 <details>
 <summary>Code</summary>
@@ -783,23 +773,23 @@ From  $O(q * n * m * w)$ to $O(n * m * maxWordLength + s * avgWordLength)$ using
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
- 
+
 #define fastio ios_base::sync_with_stdio(0); cin.tie(0)
 using LL = long long;
- 
+
 const int dx[] = {1, -1, 0, 0, 1, 1, -1, -1};
 const int dy[] = {0, 0, 1, -1, 1, -1, 1, -1};
- 
+
 struct TrieNode {
     unordered_map<char, TrieNode*> children;
     bool isEnd = false;
 };
- 
+
 class Trie {
 public:
     TrieNode* root;
     Trie() { root = new TrieNode(); }
- 
+
     void insert(const string& word) {
         TrieNode* node = root;
         for (char c : word) {
@@ -809,7 +799,7 @@ public:
         }
         node->isEnd = true;
     }
- 
+
     bool markFound(const string& word) {
         TrieNode* node = root;
         for (char c : word) {
@@ -823,51 +813,51 @@ public:
         return false;             // already found before
     }
 };
- 
+
 int n, m;
 vector<string> grid;
 Trie trie;
 int ans;
- 
+
 void searchFrom(int x, int y, int dirX, int dirY) {
     TrieNode* node = trie.root;
     string word = "";
- 
+
     for (int step = 0; step < 1000; ++step) {
         if (x < 0 || x >= n || y < 0 || y >= m) break;
         char c = grid[x][y];
         if (!node->children.count(c)) break;
- 
+
         node = node->children[c];
         word += c;
- 
+
         if (node->isEnd) {
             if (trie.markFound(word)) {
                 ans++;
             }
         }
- 
+
         x += dirX;
         y += dirY;
     }
 }
- 
+
 void solve() {
     cin >> n >> m;
     grid.resize(n);
     for (auto& row : grid) cin >> row;
- 
+
     int q;
     cin >> q;
     trie = Trie();
     ans = 0;
- 
+
     string word;
     while(q--) {
         cin >> word;
         trie.insert(word);
     }
- 
+
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < m; ++j) {
             for (int d = 0; d < 8; ++d) {
@@ -875,10 +865,10 @@ void solve() {
             }
         }
     }
- 
+
     cout << ans << '\n';
 }
- 
+
 int main() {
     fastio;
     int t;
@@ -893,9 +883,7 @@ int main() {
 </details>
 </details>
 
-
 </details>
-
 
 <details>
 <summary>Problem E - Eid Salami</summary>
