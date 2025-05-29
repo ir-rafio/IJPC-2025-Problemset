@@ -490,16 +490,16 @@ For each name:
 
 While the algorithm is simple, the code can become very large unless written in a clean way. The implementation can be made much cleaner and more manageable by using **functions**. Repeating the same block of code in multiple places is bad practice. Function improves readability, reduces the chance of errors, and makes debugging and testing easier. 
 
-**Overall Time Complexity : O(q × n × m × w)**
+__Overall Time Complexity :__ $O(q × n × m × w)$
 
 **Parameter Definitions**
 
 | Parameter | Description |
 |-----------|-------------|
-| **q** | Number of queries |
-| **n** | Number of rows in the grid |
-| **m** | Number of columns in the grid |
-| **w** | Sum of characters to be queried |
+| $q$ | Number of queries |
+| $n$ | Number of rows in the grid |
+| $m$ | Number of columns in the grid |
+| $w$ | Sum of characters to be queried |
 
 <details>
 <summary>Code</summary>
@@ -557,8 +557,6 @@ bool foundInGrid(vector<string>& grid, string& str)
     return 0;
 }
 
-
-
 void pre()
 {
     fastio;
@@ -572,11 +570,11 @@ void solve(int tc)
     vector<string> grid(n);
     for(auto &row: grid) cin >> row;
 
-    int s, cnt = 0;
+    int q, cnt = 0;
     string str;
-    cin >> s;
+    cin >> q;
 
-    while(s--)
+    while(q--)
     {
         cin >> str;
         cnt += foundInGrid(grid, str);
@@ -734,10 +732,10 @@ void solve(int tc)
     // Check out how the text looks
     // cout << text << '\n';
 
-    int i, s, cnt = 0;
-    cin >> s;
+    int i, q, cnt = 0;
+    cin >> q;
 
-    while(s--)
+    while(q--)
     {
         cin >> soldier;
         cnt += foundInText(text, soldier);
@@ -775,7 +773,7 @@ The key idea is to iterate only over the longer word (Leonardo) and mark the end
 
 This will reduce the worst case time complexity in a significant way 
 
-From  __O(q * n * m * w)__ to __O(n * m * max_word_length + s * avg_word_length)__ using __Trie__
+From  $O(q * n * m * w)$ to $O(n * m * maxWordLength + s * avgWordLength)$ using __Trie__
 
 [Go through this tutorial on Trie if you are interested](https://www.geeksforgeeks.org/introduction-to-trie-data-structure-and-algorithm-tutorials/) (Highly encouraged) 
 
@@ -859,13 +857,13 @@ void solve() {
     grid.resize(n);
     for (auto& row : grid) cin >> row;
  
-    int s;
-    cin >> s;
+    int q;
+    cin >> q;
     trie = Trie();
     ans = 0;
  
     string word;
-    while(s--) {
+    while(q--) {
         cin >> word;
         trie.insert(word);
     }
