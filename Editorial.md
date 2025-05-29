@@ -334,8 +334,6 @@ using LL = long long;
 void pre()
 {
     fastio;
-
-
 }
 
 void solve(int tc)
@@ -452,7 +450,7 @@ Problem Setter: [Akib Haider](https://codeforces.com/profile/_akibhaider_)
 
 Difficulty: Medium
 
-Tag(s): Brute Force, Implementation, Strings
+Tag(s): Brute Force, Implementation, Strings, Data Structures
 
 <details>
 <summary>Hint 1</summary>
@@ -478,11 +476,9 @@ While the algorithm is simple, the code can become very large unless written in 
 
 In programming, repeating the same block of code in multiple places is considered bad practice. When a piece of logic is **reusable**, it is often a good idea to put it in a function. This improves readability, reduces the chance of errors, and makes debugging and testing easier. 
 
-## Overall Time Complexity
+**Overall Time Complexity : O(q × n × m × w)**
 
-**O(q × n × m × w)**
-
-### Parameter Definitions
+**Parameter Definitions**
 
 | Parameter | Description |
 |-----------|-------------|
@@ -544,7 +540,6 @@ bool foundInGrid(vector<string>& grid, string& str)
             if(foundInLine(grid, str, i, j, -1, -1)) return 1;
         }
     }
-
     return 0;
 }
 
@@ -553,8 +548,6 @@ bool foundInGrid(vector<string>& grid, string& str)
 void pre()
 {
     fastio;
-
-
 }
 
 void solve(int tc)
@@ -565,16 +558,15 @@ void solve(int tc)
     vector<string> grid(n);
     for(auto &row: grid) cin >> row;
 
-    int f, cnt = 0;
+    int s, cnt = 0;
     string str;
     cin >> f;
 
-    while(f--)
+    while(s--)
     {
         cin >> str;
         cnt += foundInGrid(grid, str);
     }
-
     cout << cnt;
 }
 
@@ -590,7 +582,6 @@ int main()
         solve(tc);
         cout << '\n';
     }
-
     return 0;
 }
 ```
@@ -713,8 +704,6 @@ bool foundInText(string& text, string& pattern)
 void pre()
 {
     fastio;
-
-
 }
 
 void solve(int tc)
@@ -764,13 +753,13 @@ int main()
 </details>
  
 <details>
-<summary>Alternate Solution 2 (Improved Version)</summary>
+<summary>Alternate Solution 2</summary>
            
 Let's consider a situation where soldier names to be queried are: "L", "Leo", "Leon", "Leonardo"! Notice that "L", "Leo", "Leon" are all prefixes of "Leonardo", thus forming a progressive sequence. In a naive brute-force approach, all common characters in a progressive sequence (such as the earlier case) are overcounted. Iterating over the characters in "Leonardo" is enough. To counter this situation, among many other approaches, one simpler solution is to store the words in a dictionary-like structure using a data structure called a "Prefix Tree" or "Trie". 
 
 The key idea is to iterate only over the longer word (Leonardo) and mark the end positions of other words (L at index 0, Leo at index 2, Leon at index 3). Then, one iteration over the characters in the longer word is sufficient—prefixes are searched on the fly!
 
-This will reduce the worst case time complexity in a significant way ( From  O(q * n * m * w) to O(n * m * max_word_length + s * avg_word_length) )
+This will reduce the worst case time complexity in a significant way ( From  __O(q * n * m * w)__ to __O(n * m * max_word_length + s * avg_word_length)__ )
 
 [Go through this tutorial on Trie if you are interested](https://www.geeksforgeeks.org/introduction-to-trie-data-structure-and-algorithm-tutorials/) (Highly encouraged) 
 
