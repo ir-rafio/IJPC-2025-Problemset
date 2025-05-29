@@ -455,7 +455,7 @@ Difficulty: Medium
 Tag(s): Brute Force, Implementation, Strings
 
 <details>
-<summary>Hint</summary>
+<summary>Hint 1</summary>
 
 Read the input constraints carefully.
 
@@ -476,7 +476,20 @@ For each name:
 
 While the algorithm is simple, the code can become very large unless written in a clean way. The implementation can be made much cleaner and more manageable by using **functions**.
 
-In programming, repeating the same block of code in multiple places is considered bad practice. When a piece of logic is **reusable**, it is often a good idea to put it in a function. This improves readability, reduces the chance of errors, and makes debugging and testing easier.
+In programming, repeating the same block of code in multiple places is considered bad practice. When a piece of logic is **reusable**, it is often a good idea to put it in a function. This improves readability, reduces the chance of errors, and makes debugging and testing easier. 
+
+## Overall Time Complexity
+
+**O(q × n × m × w)**
+
+### Parameter Definitions
+
+| Parameter | Description |
+|-----------|-------------|
+| **q** | Number of queries |
+| **n** | Number of rows in the grid |
+| **m** | Number of columns in the grid |
+| **w** | Sum of characters to be queried |
 
 <details>
 <summary>Code</summary>
@@ -586,7 +599,7 @@ int main()
 </details>
 
 <details>
-<summary>Alternate Solution</summary>
+<summary>Alternate Solution 1</summary>
 
 Instead of manually scanning the grid in 8 directions for every string, you can flatten the grid into a single _text_ string that contains all the lines — rows, columns, diagonals — separated by delimiters (e.g., commas, underscores, or dollar signs) that are guaranteed not to occur in the grid.
 
@@ -749,6 +762,135 @@ int main()
 
 </details>
 </details>
+ 
+<details>
+<summary>Alternate Solution 2 (Improved Version)</summary>
+           
+Let's consider a situation where soldier names to be queried are: "L", "Leo", "Leon", "Leonardo"! Notice that "L", "Leo", "Leon" are all prefixes of "Leonardo", thus forming a progressive sequence. In a naive brute-force approach, all common characters in a progressive sequence (such as the earlier case) are overcounted. Iterating over the characters in "Leonardo" is enough. To counter this situation, among many other approaches, one simpler solution is to store the words in a dictionary-like structure using a data structure called a "Prefix Tree" or "Trie". 
+
+The key idea is to iterate only over the longer word (Leonardo) and mark the end positions of other words (L at index 0, Leo at index 2, Leon at index 3). Then, one iteration over the characters in the longer word is sufficient—prefixes are searched on the fly!
+
+This will reduce the worst case time complexity in a significant way ( From  O(q * n * m * w) to O(n * m * max_word_length + s * avg_word_length) )
+
+[Go through this tutorial on Trie if you are interested](https://www.geeksforgeeks.org/introduction-to-trie-data-structure-and-algorithm-tutorials/) (Highly encouraged) 
+
+<details>
+<summary>Code</summary>
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+ 
+#define fastio ios_base::sync_with_stdio(0); cin.tie(0)
+using LL = long long;
+ 
+const int dx[] = {1, -1, 0, 0, 1, 1, -1, -1};
+const int dy[] = {0, 0, 1, -1, 1, -1, 1, -1};
+ 
+struct TrieNode {
+    unordered_map<char, TrieNode*> children;
+    bool isEnd = false;
+};
+ 
+class Trie {
+public:
+    TrieNode* root;
+    Trie() { root = new TrieNode(); }
+ 
+    void insert(const string& word) {
+        TrieNode* node = root;
+        for (char c : word) {
+            if (!node->children.count(c))
+                node->children[c] = new TrieNode();
+            node = node->children[c];
+        }
+        node->isEnd = true;
+    }
+ 
+    bool markFound(const string& word) {
+        TrieNode* node = root;
+        for (char c : word) {
+            if (!node->children.count(c)) return false;
+            node = node->children[c];
+        }
+        if (node->isEnd) {
+            node->isEnd = false;  // mark as used
+            return true;          // first time found
+        }
+        return false;             // already found before
+    }
+};
+ 
+int n, m;
+vector<string> grid;
+Trie trie;
+int ans;
+ 
+void searchFrom(int x, int y, int dirX, int dirY) {
+    TrieNode* node = trie.root;
+    string word = "";
+ 
+    for (int step = 0; step < 1000; ++step) {
+        if (x < 0 || x >= n || y < 0 || y >= m) break;
+        char c = grid[x][y];
+        if (!node->children.count(c)) break;
+ 
+        node = node->children[c];
+        word += c;
+ 
+        if (node->isEnd) {
+            if (trie.markFound(word)) {
+                ans++;
+            }
+        }
+ 
+        x += dirX;
+        y += dirY;
+    }
+}
+ 
+void solve() {
+    cin >> n >> m;
+    grid.resize(n);
+    for (auto& row : grid) cin >> row;
+ 
+    int s;
+    cin >> s;
+    trie = Trie();
+    ans = 0;
+ 
+    string word;
+    for (int i = 0; i < s; ++i) {
+        cin >> word;
+        trie.insert(word);
+    }
+ 
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            for (int d = 0; d < 8; ++d) {
+                searchFrom(i, j, dx[d], dy[d]);
+            }
+        }
+    }
+ 
+    cout << ans << '\n';
+}
+ 
+int main() {
+    fastio;
+    int t;
+    cin >> t;
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
+```
+
+</details>
+</details>
+
+
 </details>
 
 <details>
