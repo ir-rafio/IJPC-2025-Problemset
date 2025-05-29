@@ -469,6 +469,13 @@ Read the input constraints carefully.
 </details>
 
 <details>
+<summary>Hint 2</summary>
+
+Have you heard of **brute force**? What will the time complexity of brute force approach here considering all queries and total word length? 
+
+</details>
+
+<details>
 <summary>Solution</summary>
 
 This problem can be solved using a brute-force approach.
@@ -481,9 +488,7 @@ For each name:
 - For each direction from the 8 possible directions, try to match each character in the string.
 - If the full string matches without going out of bounds, count it.
 
-While the algorithm is simple, the code can become very large unless written in a clean way. The implementation can be made much cleaner and more manageable by using **functions**.
-
-In programming, repeating the same block of code in multiple places is considered bad practice. When a piece of logic is **reusable**, it is often a good idea to put it in a function. This improves readability, reduces the chance of errors, and makes debugging and testing easier. 
+While the algorithm is simple, the code can become very large unless written in a clean way. The implementation can be made much cleaner and more manageable by using **functions**. Repeating the same block of code in multiple places is bad practice. Function improves readability, reduces the chance of errors, and makes debugging and testing easier. 
 
 **Overall Time Complexity : O(q × n × m × w)**
 
@@ -569,7 +574,7 @@ void solve(int tc)
 
     int s, cnt = 0;
     string str;
-    cin >> f;
+    cin >> s;
 
     while(s--)
     {
@@ -729,10 +734,10 @@ void solve(int tc)
     // Check out how the text looks
     // cout << text << '\n';
 
-    int i, q, cnt = 0;
-    cin >> q;
+    int i, s, cnt = 0;
+    cin >> s;
 
-    for(i = 0; i < q; i++)
+    while(s--)
     {
         cin >> soldier;
         cnt += foundInText(text, soldier);
@@ -768,7 +773,9 @@ Let's consider a situation where soldier names to be queried are: "L", "Leo", "L
 
 The key idea is to iterate only over the longer word (Leonardo) and mark the end positions of other words (L at index 0, Leo at index 2, Leon at index 3). Then, one iteration over the characters in the longer word is sufficient—prefixes are searched on the fly!
 
-This will reduce the worst case time complexity in a significant way ( From  __O(q * n * m * w)__ to __O(n * m * max_word_length + s * avg_word_length)__ )
+This will reduce the worst case time complexity in a significant way 
+
+From  __O(q * n * m * w)__ to __O(n * m * max_word_length + s * avg_word_length)__ using __Trie__
 
 [Go through this tutorial on Trie if you are interested](https://www.geeksforgeeks.org/introduction-to-trie-data-structure-and-algorithm-tutorials/) (Highly encouraged) 
 
@@ -858,7 +865,7 @@ void solve() {
     ans = 0;
  
     string word;
-    for (int i = 0; i < s; ++i) {
+    while(s--) {
         cin >> word;
         trie.insert(word);
     }
@@ -890,6 +897,7 @@ int main() {
 
 
 </details>
+
 
 <details>
 <summary>Problem E - Eid Salami</summary>
