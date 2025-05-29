@@ -31,7 +31,6 @@ What would be the optimal strategy for $k = 1$?
 </details>
 
 <details>
-           
 <summary> Hint 4</summary>
 
 Only the original wizards' clones survive. Since clones of clones do not survive, it's easier to think of them as not being created in the first place.
@@ -56,7 +55,7 @@ When the _i-th_ wizard casts the spell:
 - These clones are inserted immediately before wizard $i$.
 - The rest shift right accordingly.
 - The overall effect of the spell is that a **segment** (prefix) of original wizards are added to the lineup.
-- The cloned segment adds $sum(a_1, \dots, a_{i - 1})$ to the total magical potential. This is exactly the **prefix sum** of the array up to index $(i - 1)$, i.e., $prefixSum[i - 1]$.
+- The cloned segment adds $\displaystyle\sum_{j=1}^{i-1} A_j$ to the total magical potential. This is exactly the **prefix sum** of the array up to index $(i - 1)$, i.e., $\text{ps}[i - 1]$.
 
 ---
 
@@ -64,11 +63,18 @@ Imagine you're allowed to **cast the spell only once**. To get the **maximum ben
 
 So:
 
-- Consider $prefixSum[0] = 0$.
-- For every $i$ from $1$ to $n$, compute $prefixSum[i] = \sum_{j=1}^{i} (a_j) = prefixSum[i - 1] + a_i$.
-- Try every $i$ from $1$ to $n$, and choose the maximum value $prefixSum[i - 1]$.
-- This value is the **gain** from one spell. Add it to $prefixSum[n]$ to get the final magical potential.
-- Notice that you cannot get $prefixSum[n]$ as gain because nobody can make a clone of the last wizard.
+- Define
+  \[
+    \text{ps}[0] = 0, \quad
+    \text{ps}[i] = \sum_{j=1}^{i} A_j \quad\text{for }1 \le i \le n.
+  \]
+- The **gain** from one spell is $\max_{0 \le i \le n-1} \text{ps}[i]$.
+- The **initial sum** is
+  \[
+    \text{initialSum}
+    = \sum_{i=1}^n A_i
+    = \text{ps}[n].
+  \]
 
 ---
 
@@ -78,25 +84,29 @@ Here's the key insight:
 
 - Clones **can't be cloned** again.
 - Whenever a spell is cast, the new wizards added to the lineup (that survive) will always be a **segment** (prefix) of the original wizard lineup.
-
-Thus:
-
 - The **gain from each additional spell** is **fixed** once you pick the best wizard $i$.
-- So if you pick the best $i$, you can gain $prefixSum[i - 1]$ from each of the $k$ spells.
+- So if you pick the best $i$, you can gain $\max_{0 \le j \le n-1}\text{ps}[j]$ from each of the $k$ spells.
 
 ---
 
-Final Formula:
+**Final Formula:**
 
-- Let
-  $\textit{initialSum} = \sum_{i = 1}^{n } a[i]$
-
-- Let
-  $\boxed{\textit{maxPrefixSum} = \max(\textit{prefixSum}[0], \textit{prefixSum}[1], \dots, \textit{prefixSum}[n - 1])}$
+Let
+\[
+\text{initialSum} = \sum_{i=1}^n A_i = \text{ps}[n],
+\quad
+\text{maxPrefixSum} = \max_{0 \le i \le n-1}\text{ps}[i].
+\]
 
 Then, the total magical potential after applying the cloning spell up to $k$ times is given by:
 
-$\large\boldsymbol{\textit{answer} = \textit{initialSum} + k \times \textit{maxPrefixSum}}$
+\[
+\boxed{
+\displaystyle
+\text{answer}
+= \text{initialSum} + k \times \text{maxPrefixSum}
+}
+\]
 
 Time Complexity = $O(n)$
 
@@ -129,19 +139,18 @@ int main() {
        }
 
        vector<ll> prefixSum(n+1);
-       prefixSum[1] = wizards[1];
-
+       prefixSum[0] = 0;
        for (ll i = 1; i <= n; i++) {
            prefixSum[i] = prefixSum[i - 1] + wizards[i];
        }
 
        ll maxPrefixSum = 0;
-       for (ll i = 1; i <= n - 1; i++) {
+       for (ll i = 0; i <= n - 1; i++) {
            maxPrefixSum = max(maxPrefixSum, prefixSum[i]);
        }
 
        ll answer = initialSum + k * maxPrefixSum;
-       cout << answer << endl;
+       cout << answer << "\n";
    }
 
    return 0;
