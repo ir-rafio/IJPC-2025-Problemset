@@ -120,27 +120,23 @@ int main() {
        cin >> n >> k;
 
        vector<ll> wizards(n+1);
-       ll initialSum = 0;
-
        for (ll i = 1; i <= n; i++) {
            cin >> wizards[i];
-           initialSum += wizards[i];
        }
 
        vector<ll> prefixSum(n+1);
-       prefixSum[1] = wizards[1];
-
+       prefixSum[0] = 0;
        for (ll i = 1; i <= n; i++) {
            prefixSum[i] = prefixSum[i - 1] + wizards[i];
        }
 
-       ll maxPrefixSum = 0;
+       ll initialSum = prefixSum[n], maxPrefixSum = 0;
        for (ll i = 1; i <= n - 1; i++) {
            maxPrefixSum = max(maxPrefixSum, prefixSum[i]);
        }
 
        ll answer = initialSum + k * maxPrefixSum;
-       cout << answer << endl;
+       cout << answer << '\n';
    }
 
    return 0;
